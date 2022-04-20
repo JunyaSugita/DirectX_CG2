@@ -390,6 +390,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
 	assert(SUCCEEDED(result));
 
+	//入力データ形式のセット
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//標準形式
+	assert(SUCCEEDED(result));
+
 	//排他制御レベルのセット
 	result = keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
@@ -415,10 +419,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		keyboard->Acquire();
 		//全キーの入力状態を取得する
 		BYTE key[256] = {};
-		keyboard->GetDeviceState(sizeof(key), key);
+		result = keyboard->GetDeviceState(sizeof(key), key);
+		assert(SUCCEEDED(result));
 
-		if (key[DIK_0]) {
-			OutputDebugStringA("Hit 0\n");
+		float color;
+		if (key[DIK_SPACE]) {
+			color = 0.9f;
+		}
+		else {
+			color = 0.1f;
 		}
 
 		// バックバッファの番号を取得(2つなので0番か1番)
@@ -437,7 +446,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
 
 		// 3.画面クリア R G B A
-		FLOAT clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
+		FLOAT clearColor[] = { color,0.25f, 0.5f,0.0f }; // 青っぽい色
 		commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 
 		// 4.描画コマンドここから　//
