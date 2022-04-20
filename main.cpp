@@ -14,10 +14,8 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
-#define DIRECTINPUT_VERSION 0x0800 //DirectInputのバージョン指定
-#include <dinput.h>
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
+//自作クラス
+#include "Input.h"
 
 //ウインドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
@@ -380,24 +378,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
-	//DirectInputの初期化
-	IDirectInput8* directInput = nullptr;
-	result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
-	assert(SUCCEEDED(result));
-
-	//キーボードデバイスの生成
-	IDirectInputDevice8* keyboard = nullptr;
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
-	assert(SUCCEEDED(result));
-
-	//入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//標準形式
-	assert(SUCCEEDED(result));
-
-	//排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-	assert(SUCCEEDED(result));
-
+	Input* input = new Input;
+	input->Initialize(w,result,hwnd);
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//初期化処理　ここまで//
 
 
@@ -416,10 +400,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		//毎フレーム処理　ここから//
-		keyboard->Acquire();
+		input->keyboard->Acquire();
 		//全キーの入力状態を取得する
 		BYTE key[256] = {};
-		result = keyboard->GetDeviceState(sizeof(key), key);
+		result = input->keyboard->GetDeviceState(sizeof(key), key);
 		assert(SUCCEEDED(result));
 
 		float color;
@@ -520,6 +504,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//毎フレーム処理　ここまで//
 	}
+
+	delete input;
 
 	//ウィンドウクラスを登録解除
 	UnregisterClass(w.lpszClassName, w.hInstance);
