@@ -14,6 +14,10 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
+#define DIRECTINPUT_VERSION 0x0800 //DirectInputのバージョン指定
+#include <dinput.h>
+#pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "dxguid.lib")
 
 //ウインドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
@@ -318,11 +322,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// 頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
-	{
-	"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
-	D3D12_APPEND_ALIGNED_ELEMENT,
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-	}, // (1行で書いたほうが見やすい)
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,D3D12_APPEND_ALIGNED_ELEMENT,D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1行で書いたほうが見やすい)
 	};
 
 	// グラフィックスパイプライン設定
@@ -380,7 +380,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
+	//DirectInputの初期化
+	IDirectInput8* directInput = nullptr;
+	result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	assert(SUCCEEDED(result));
 
+	//キーボードデバイスの生成
+	IDirectInputDevice8* keyboard = nullptr;
+	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	assert(SUCCEEDED(result));
+
+	//排他制御レベルのセット
+	result = keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(result));
 
 	//初期化処理　ここまで//
 
@@ -400,7 +412,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		//毎フレーム処理　ここから//
-		
+		keyboard->Acquire();
+		//全キーの入力状態を取得する
+		BYTE key[256] = {};
+		keyboard->GetDeviceState(sizeof(key), key);
+
+		if (key[DIK_0]) {
+			OutputDebugStringA("Hit 0\n");
+		}
+
 		// バックバッファの番号を取得(2つなので0番か1番)
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
 		// 1.リソースバリアで書き込み可能に変更
@@ -421,7 +441,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 
 		// 4.描画コマンドここから　//
-		
+
 		// ビューポート設定コマンド
 		D3D12_VIEWPORT viewport{};
 		viewport.Width = window_width;
