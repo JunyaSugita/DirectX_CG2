@@ -1,10 +1,10 @@
 #include "WinApp.h"
 
-
 WinApp::WinApp() {
 }
 
-WinApp::~WinApp(){}
+WinApp::~WinApp(){
+}
 
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	//メッセージに応じてゲーム固有の処理を行う
@@ -53,4 +53,26 @@ void WinApp::WinCreate() {
 
 	//ウインドウを表示状態にする
 	ShowWindow(hwnd, SW_SHOW);
+}
+
+void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graphics) {
+	//ゲームループ
+	while (true) {
+		//メッセージがあるか?
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);	//キー入力メッセージの処理
+			DispatchMessage(&msg);	//プロシージャにメッセージを送る
+		}
+		graphics->Process(iniDX, draw);
+		input->GetKey(iniDX);
+
+
+		//×ボタンで終了
+		if (msg.message == WM_QUIT) {
+			break;
+		}
+	}
+
+	//ウィンドウクラスを登録解除
+	UnregisterClass(w.lpszClassName, w.hInstance);
 }

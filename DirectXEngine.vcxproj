@@ -139,9 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="IniDX.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WinApp.cpp" />
+    <ClCompile Include="WinSize.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicPS.hlsl">
@@ -158,8 +162,12 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Draw.h" />
+    <ClInclude Include="IniDX.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="WinApp.h" />
+    <ClInclude Include="WinSize.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
