@@ -24,7 +24,7 @@ void Graphics::Process(IniDX* iniDX,Draw* draw) {
 	iniDX->commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
 
 	// 3.画面クリア R G B A
-	FLOAT clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
+	FLOAT clearColor[] = { 0.0f,0.0f, 1.0f,0.0f }; // 青っぽい色
 	iniDX->commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 
 	// 4.描画コマンド

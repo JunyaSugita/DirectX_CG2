@@ -33,7 +33,6 @@ void Input::GetKey(IniDX* iniDX) {
 	//‘SƒL[‚Ì“ü—Íó‘Ô‚ðŽæ“¾‚·‚é
 	BYTE key[256] = {};
 	iniDX->result = keyboard->GetDeviceState(sizeof(key), key);
-	assert(SUCCEEDED(iniDX->result));
 
 	float color;
 	if (key[DIK_SPACE]) {
