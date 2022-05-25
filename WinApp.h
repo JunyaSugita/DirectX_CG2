@@ -17,5 +17,7 @@ public:
 	WNDCLASSEX w{};
 	HWND hwnd;
 	MSG msg{};
+
+	float a = 0.0f;
 };
 

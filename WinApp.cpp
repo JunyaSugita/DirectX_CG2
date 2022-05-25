@@ -66,6 +66,12 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		graphics->Process(iniDX, draw);
 		input->GetKey(iniDX);
 
+		a += 0.01f;
+		if (a >= 1.0f) {
+			a = 1.0f;
+		}
+		draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,0.5f);
+
 		//~ƒ{ƒ^ƒ“‚ÅI—¹
 		if (msg.message == WM_QUIT) {
 			break;
