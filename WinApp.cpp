@@ -66,7 +66,6 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		graphics->Process(iniDX, draw);
 		input->GetKey(iniDX);
 
-
 		//~ƒ{ƒ^ƒ“‚ÅI—¹
 		if (msg.message == WM_QUIT) {
 			break;

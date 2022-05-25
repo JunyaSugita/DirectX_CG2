@@ -24,7 +24,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//–ˆƒtƒŒ[ƒ€ˆ—
 	winApp->MessageLoop(iniDX,draw,input,graphics);
 	
-
 	delete winApp;
 	delete input;
 	delete graphics;

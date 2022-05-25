@@ -1,14 +1,14 @@
 #include "Graphics.h"
 
-Graphics::Graphics(){
+Graphics::Graphics() {
 	winSize = new WinSize;
 }
 
-Graphics::~Graphics(){
+Graphics::~Graphics() {
 	delete winSize;
 }
 
-void Graphics::Process(IniDX* iniDX,Draw* draw) {
+void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	// バックバッファの番号を取得(2つなので0番か1番)
 	UINT bbIndex = iniDX->swapChain->GetCurrentBackBufferIndex();
 	// 1.リソースバリアで書き込み可能に変更
@@ -24,7 +24,7 @@ void Graphics::Process(IniDX* iniDX,Draw* draw) {
 	iniDX->commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
 
 	// 3.画面クリア R G B A
-	FLOAT clearColor[] = { 0.0f,0.0f, 1.0f,0.0f }; // 青っぽい色
+	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f }; // 青っぽい色
 	iniDX->commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 
 	// 4.描画コマンド
@@ -57,6 +57,9 @@ void Graphics::Process(IniDX* iniDX,Draw* draw) {
 
 	// 頂点バッファビューの設定コマンド
 	iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	iniDX->commandList->SetGraphicsRootConstantBufferView(0, draw->constBuffMaterial->GetGPUVirtualAddress());
 
 	// 描画コマンド
 	iniDX->commandList->DrawInstanced(_countof(draw->vertices), 1, 0, 0); // 全ての頂点を使って描画
