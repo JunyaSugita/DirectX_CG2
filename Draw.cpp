@@ -6,11 +6,20 @@ Draw::~Draw() {}
 
 void Draw::Ini(IniDX* iniDX) {
 	//頂点データ
-	vertices[0] = { -0.5f, -0.5f, 0.0f };	//左下
-	vertices[1] = { -0.5f, +0.5f, 0.0f };	//左上
-	vertices[2] = { +0.5f, -0.5f, 0.0f };	//右下
+	vertices = std::vector<XMFLOAT3>({
+		{ -0.5f, -0.5f, 0.0f},		//左下
+		{ -0.5f, +0.5f, 0.0f},		//左上
+		{ +0.5f, -0.5f, 0.0f},		//右下
+		{ +0.5f, +0.5f, 0.0f}		//右上
+	});
+
+	indices = std::vector<uint16_t>({
+		0,1,2,
+		1,2,3,
+
+	});
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
+	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * vertices.size());
 
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};			//ヒープ設定
@@ -36,12 +45,49 @@ void Draw::Ini(IniDX* iniDX) {
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(iniDX->result));
 
+	//インデックスデータ全体のサイズ
+	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices.size());
+
+	//リソース設定
+	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resDesc.Width = sizeIB;
+	resDesc.DepthOrArraySize = 1;
+	resDesc.MipLevels = 1;
+	resDesc.SampleDesc.Count = 1;
+	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//インデックスバッファの生成
+	ID3D12Resource* indexBuff = nullptr;
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&heapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&indexBuff)
+	);
+
+	//インデックスバッファをマッピング
+	uint16_t* indexMap = nullptr;
+	iniDX->result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+	//全インデックスに対して
+	for (int i = 0; i < indices.size(); i++) {
+		indexMap[i] = indices[i];
+	}
+	//マッピング解除
+	indexBuff->Unmap(0, nullptr);
+
+	//インデックスバッファビューの作成
+	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
+	ibView.Format = DXGI_FORMAT_R16_UINT;
+	ibView.SizeInBytes = sizeIB;
+
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	XMFLOAT3* vertMap = nullptr;
 	iniDX->result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(iniDX->result));
 	// 全頂点に対して
-	for (int i = 0; i < _countof(vertices); i++) {
+	for (int i = 0; i < vertices.size(); i++) {
 		vertMap[i] = vertices[i]; // 座標をコピー
 	}
 	// 繋がりを解除
@@ -217,5 +263,5 @@ void Draw::Ini(IniDX* iniDX) {
 	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(iniDX->result));
 
-	
+
 }

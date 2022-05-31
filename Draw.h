@@ -14,7 +14,8 @@ public:
 	void Ini(IniDX* iniDX);
 
 public:
-	XMFLOAT3 vertices[3];
+	std::vector<XMFLOAT3> vertices;
+	std::vector<uint16_t> indices;
 
 	ID3D12PipelineState* pipelineState;
 	// ルートシグネチャ
@@ -25,7 +26,8 @@ public:
 	D3D12_ROOT_PARAMETER rootParam = {};
 	//リソース設定
 	ID3D12Resource* constBuffMaterial = nullptr;
-
+	//インデックスバッファビューの作成
+	D3D12_INDEX_BUFFER_VIEW ibView{};
 	//
 	struct ConstBufferDataMaterial {
 		XMFLOAT4 color;		// 色 (RGBA)

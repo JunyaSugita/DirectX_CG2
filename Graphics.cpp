@@ -52,18 +52,21 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	iniDX->commandList->SetPipelineState(draw->pipelineState);
 	iniDX->commandList->SetGraphicsRootSignature(draw->rootSignature);
 
-	// プリミティブ形状の設定コマンド
-	iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
-
+	// プリミティブ形状の設定コマンド/////////////////////////////////////////////////////
+	iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); 
+	/////////////////////////////////////////////////////////////////////////////////
 	// 頂点バッファビューの設定コマンド
 	iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	iniDX->commandList->SetGraphicsRootConstantBufferView(0, draw->constBuffMaterial->GetGPUVirtualAddress());
 
-	// 描画コマンド
-	iniDX->commandList->DrawInstanced(_countof(draw->vertices), 1, 0, 0); // 全ての頂点を使って描画
+	//インデックスバッファビューの設定コマンド
+	iniDX->commandList->IASetIndexBuffer(&draw->ibView);
 
+	// 描画コマンド
+	//iniDX->commandList->DrawInstanced(draw->vertices.size(), 1, 0, 0);
+	iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
 
 	// 5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態から
