@@ -28,7 +28,7 @@ public:
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	//ルートパラメータの設定
-	D3D12_ROOT_PARAMETER rootParam = {};
+	D3D12_ROOT_PARAMETER rootParams[2] = {};
 	//リソース設定
 	ID3D12Resource* constBuffMaterial = nullptr;
 	//インデックスバッファビューの作成
@@ -39,5 +39,10 @@ public:
 	};
 	//色
 	ConstBufferDataMaterial* constMapMaterial;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRange{};
+
+	//設定を元にSRV用デスクリプタヒープを生成
+	ID3D12DescriptorHeap* srvHeap = nullptr;
 };
 

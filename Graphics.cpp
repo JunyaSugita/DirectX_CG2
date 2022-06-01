@@ -52,14 +52,20 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	iniDX->commandList->SetPipelineState(draw->pipelineState);
 	iniDX->commandList->SetGraphicsRootSignature(draw->rootSignature);
 
-	// プリミティブ形状の設定コマンド/////////////////////////////////////////////////////
-	iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); 
-	/////////////////////////////////////////////////////////////////////////////////
+	// プリミティブ形状の設定コマンド///////////////////////////////////////////////////////
+	iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);// 
+	//////////////////////////////////////////////////////////////////////////////////
 	// 頂点バッファビューの設定コマンド
 	iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	iniDX->commandList->SetGraphicsRootConstantBufferView(0, draw->constBuffMaterial->GetGPUVirtualAddress());
+	//SRVヒープの設定コマンド
+	iniDX->commandList->SetDescriptorHeaps(1, &draw->srvHeap);
+	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = draw->srvHeap->GetGPUDescriptorHandleForHeapStart();
+	//SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
+	iniDX->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 	//インデックスバッファビューの設定コマンド
 	iniDX->commandList->IASetIndexBuffer(&draw->ibView);
