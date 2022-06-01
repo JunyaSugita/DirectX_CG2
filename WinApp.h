@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "input.h"
+#include <DirectXTex.h>
 
 class WinApp{
 public:
