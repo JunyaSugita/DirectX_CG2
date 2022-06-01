@@ -5,6 +5,11 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
+struct Vertex {
+	XMFLOAT3 pos;
+	XMFLOAT2 uv;
+};
+
 class Draw{
 public:
 	Draw();
@@ -14,7 +19,7 @@ public:
 	void Ini(IniDX* iniDX);
 
 public:
-	std::vector<XMFLOAT3> vertices;
+	std::vector<Vertex> vertices;
 	std::vector<uint16_t> indices;
 
 	ID3D12PipelineState* pipelineState;

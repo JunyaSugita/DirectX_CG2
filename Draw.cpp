@@ -6,20 +6,19 @@ Draw::~Draw() {}
 
 void Draw::Ini(IniDX* iniDX) {
 	//頂点データ
-	vertices = std::vector<XMFLOAT3>({
-		{ -0.5f, -0.5f, 0.0f},		//左下
-		{ -0.5f, +0.5f, 0.0f},		//左上
-		{ +0.5f, -0.5f, 0.0f},		//右下
-		{ +0.5f, +0.5f, 0.0f}		//右上
+	vertices = std::vector<Vertex>({
+		{ { -0.4f, -0.7f, 0.0f},{0.0f,1.0f} },		//左下
+		{ { -0.4f, +0.7f, 0.0f},{0.0f,0.0f} },		//左上
+		{ { +0.4f, -0.7f, 0.0f},{1.0f,1.0f} },		//右下
+		{ { +0.4f, +0.7f, 0.0f},{1.0f,0.0f} },		//右上
 	});
 
 	indices = std::vector<uint16_t>({
 		0,1,2,
 		1,2,3,
-
 	});
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * vertices.size());
+	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};			//ヒープ設定
@@ -83,7 +82,7 @@ void Draw::Ini(IniDX* iniDX) {
 	ibView.SizeInBytes = sizeIB;
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	XMFLOAT3* vertMap = nullptr;
+	Vertex* vertMap = nullptr;
 	iniDX->result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(iniDX->result));
 	// 全頂点に対して
@@ -98,7 +97,7 @@ void Draw::Ini(IniDX* iniDX) {
 	// 頂点バッファのサイズ
 	vbView.SizeInBytes = sizeVB;
 	// 頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(XMFLOAT3);
+	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
 	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト
@@ -154,6 +153,7 @@ void Draw::Ini(IniDX* iniDX) {
 	// 頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,D3D12_APPEND_ALIGNED_ELEMENT,D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1行で書いたほうが見やすい)
+		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,D3D12_APPEND_ALIGNED_ELEMENT,D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 	};
 
 	// グラフィックスパイプライン設定
@@ -263,5 +263,85 @@ void Draw::Ini(IniDX* iniDX) {
 	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(iniDX->result));
 
+	//////////////////
+	//テクスチャの初期化
+	//////////////////
+	
+	//横方向ピクセル数
+	const size_t textureWidth = 256;
+	//縦方向ピクセル数
+	const size_t textureHeight = 256;
+	//配列の要素数
+	const size_t imageDataCount = textureWidth * textureHeight;
+	//画像イメージデータ配列
+	XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
+
+	//全ピクセルの色を初期化
+	for (size_t i = 0; i < imageDataCount; i++) {
+		imageData[i].x = 1.0f;	//R
+		imageData[i].y = 0.0f;	//G
+		imageData[i].z = 0.0f;	//B
+		imageData[i].w = 1.0f;	//A
+	}
+
+	//ヒープ設定
+	D3D12_HEAP_PROPERTIES textureHeapProp{};
+	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+	textureHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	//リソース設定
+	D3D12_RESOURCE_DESC textureResourceDesc{};
+	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	textureResourceDesc.Width = textureWidth;
+	textureResourceDesc.Height = textureHeight;
+	textureResourceDesc.DepthOrArraySize = 1;
+	textureResourceDesc.MipLevels = 1;
+	textureResourceDesc.SampleDesc.Count = 1;
+
+	//テクスチャバッファの生成
+	ID3D12Resource* texBuff = nullptr;
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&textureHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&textureResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&texBuff)
+	);
+
+	//テクスチャバッファにデータ転送
+	iniDX->result = texBuff->WriteToSubresource(
+		0,
+		nullptr,
+		imageData,
+		sizeof(XMFLOAT4) * textureWidth,
+		sizeof(XMFLOAT4) * imageDataCount
+	);
+
+	//元データ解放
+	delete[] imageData;
+
+	//SRVの最大個数
+	const size_t kMaxSRVCount = 2056;
+
+
+	//デスクリプタヒープの設定
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	srvHeapDesc.NumDescriptors = kMaxSRVCount;
+
+	//設定を元にSRV用デスクリプタヒープを生成
+	ID3D12DescriptorHeap* srvHeap = nullptr;
+	iniDX->result = iniDX->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	assert(SUCCEEDED(iniDX->result));
+
+	//SRVヒープの先頭ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+
+	//シェーダーリソースビュー設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
+	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
 }
