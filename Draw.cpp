@@ -1,4 +1,5 @@
 #include "Draw.h"
+#include <DirectXTex.h>
 
 Draw::Draw() {}
 
@@ -11,12 +12,12 @@ void Draw::Ini(IniDX* iniDX) {
 		{ { -0.4f, +0.7f, 0.0f},{0.0f,0.0f} },		//左上
 		{ { +0.4f, -0.7f, 0.0f},{1.0f,1.0f} },		//右下
 		{ { +0.4f, +0.7f, 0.0f},{1.0f,0.0f} },		//右上
-	});
+		});
 
 	indices = std::vector<uint16_t>({
 		0,1,2,
 		1,2,3,
-	});
+		});
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
@@ -239,30 +240,52 @@ void Draw::Ini(IniDX* iniDX) {
 	//テクスチャの初期化
 	//////////////////
 
-	//横方向ピクセル数
-	const size_t textureWidth = 256;
-	//縦方向ピクセル数
-	const size_t textureHeight = 256;
-	//配列の要素数
-	const size_t imageDataCount = textureWidth * textureHeight;
-	//画像イメージデータ配列
-	XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
+	TexMetadata metadata{};
+	ScratchImage scratchImg{};
+	//WICテクスチャのロード
+	iniDX->result = LoadFromWICFile(
+		L"Resources/texture.png",	//「Resources」フォルダの「texture.png」
+		WIC_FLAGS_NONE,
+		&metadata, scratchImg
+	);
 
-	//全ピクセルの色を初期化
-	for (size_t i = 0; i < imageDataCount; i++) {
-		if (i % 20 < 10) {
-			imageData[i].x = 0.0f;	//R
-			imageData[i].y = 1.0f;	//G
-			imageData[i].z = 0.0f;	//B
-			imageData[i].w = 1.0f;	//A
-		}
-		else {
-			imageData[i].x = 0.0f;	//R
-			imageData[i].y = 1.0f;	//G
-			imageData[i].z = 0.0f;	//B
-			imageData[i].w = 0.0f;	//A
-		}
+	ScratchImage mipChain{};
+	//ミップマップ生成
+	iniDX->result = GenerateMipMaps(
+		scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
+		TEX_FILTER_DEFAULT, 0, mipChain);
+	if (SUCCEEDED(iniDX->result)) {
+		scratchImg = std::move(mipChain);
+		metadata = scratchImg.GetMetadata();
 	}
+
+	//読み込んだディフューズテクスチャをSRGBとして扱う
+	metadata.format = MakeSRGB(metadata.format);
+
+	////横方向ピクセル数
+	//const size_t textureWidth = 256;
+	////縦方向ピクセル数
+	//const size_t textureHeight = 256;
+	////配列の要素数
+	//const size_t imageDataCount = textureWidth * textureHeight;
+	////画像イメージデータ配列
+	//XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
+
+	////全ピクセルの色を初期化
+	//for (size_t i = 0; i < imageDataCount; i++) {
+	//	if (i % 20 < 10) {
+	//		imageData[i].x = 0.0f;	//R
+	//		imageData[i].y = 1.0f;	//G
+	//		imageData[i].z = 0.0f;	//B
+	//		imageData[i].w = 1.0f;	//A
+	//	}
+	//	else {
+	//		imageData[i].x = 0.0f;	//R
+	//		imageData[i].y = 1.0f;	//G
+	//		imageData[i].z = 0.0f;	//B
+	//		imageData[i].w = 0.0f;	//A
+	//	}
+	//}
 
 	//ヒープ設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
@@ -272,11 +295,11 @@ void Draw::Ini(IniDX* iniDX) {
 	//リソース設定
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureResourceDesc.Width = textureWidth;
-	textureResourceDesc.Height = textureHeight;
-	textureResourceDesc.DepthOrArraySize = 1;
-	textureResourceDesc.MipLevels = 1;
+	textureResourceDesc.Format = metadata.format;
+	textureResourceDesc.Width = metadata.width;
+	textureResourceDesc.Height = (UINT)metadata.height;
+	textureResourceDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
+	textureResourceDesc.MipLevels = (UINT16)metadata.mipLevels;
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
@@ -289,18 +312,23 @@ void Draw::Ini(IniDX* iniDX) {
 		nullptr,
 		IID_PPV_ARGS(&texBuff)
 	);
-
-	//テクスチャバッファにデータ転送
-	iniDX->result = texBuff->WriteToSubresource(
-		0,
-		nullptr,
-		imageData,
-		sizeof(XMFLOAT4) * textureWidth,
-		sizeof(XMFLOAT4) * imageDataCount
-	);
+	//全ミップマップについて
+	for (size_t i = 0; i < metadata.mipLevels; i++) {
+		//ミップマップレベルを指定してイメージを取得
+		const Image* img = scratchImg.GetImage(i, 0, 0);
+		// テクスチャバッファにデータ転送
+			iniDX->result = texBuff->WriteToSubresource(
+				(UINT)i,
+				nullptr,
+				img->pixels,
+				(UINT)img->rowPitch,
+				(UINT)img->slicePitch
+			);
+			assert(SUCCEEDED(iniDX->result));
+	}
 
 	//元データ解放
-	delete[] imageData;
+	//delete[] imageData;
 
 	//SRVの最大個数
 	const size_t kMaxSRVCount = 2056;
@@ -321,10 +349,10 @@ void Draw::Ini(IniDX* iniDX) {
 
 	//シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
-	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;		//RGBA float
+	srvDesc.Format = resDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = 1;
+	srvDesc.Texture2D.MipLevels = resDesc.MipLevels;
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
 	iniDX->device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
