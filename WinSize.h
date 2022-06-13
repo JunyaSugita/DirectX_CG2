@@ -1,7 +1,5 @@
 #pragma once
-class WinSize{
-public:
-	const int WIN_WIDTH = 1280;
-	const int WIN_HEIGHT = 720;
-};
+
+const int WIN_WIDTH = 1280;
+const int WIN_HEIGHT = 720;
 

@@ -1,11 +1,9 @@
 #include "Graphics.h"
 
 Graphics::Graphics() {
-	winSize = new WinSize;
 }
 
 Graphics::~Graphics() {
-	delete winSize;
 }
 
 void Graphics::Process(IniDX* iniDX, Draw* draw) {
@@ -30,8 +28,8 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	// 4.描画コマンド
 	// ビューポート設定コマンド
 	D3D12_VIEWPORT viewport{};
-	viewport.Width = winSize->WIN_WIDTH;
-	viewport.Height = winSize->WIN_HEIGHT;
+	viewport.Width = WIN_WIDTH;
+	viewport.Height = WIN_HEIGHT;
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
@@ -42,9 +40,9 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	// シザー矩形
 	D3D12_RECT scissorRect{};
 	scissorRect.left = 0; // 切り抜き座標左
-	scissorRect.right = scissorRect.left + winSize->WIN_WIDTH; // 切り抜き座標右
+	scissorRect.right = scissorRect.left + WIN_WIDTH; // 切り抜き座標右
 	scissorRect.top = 0; // 切り抜き座標上
-	scissorRect.bottom = scissorRect.top + winSize->WIN_HEIGHT; // 切り抜き座標下
+	scissorRect.bottom = scissorRect.top + WIN_HEIGHT; // 切り抜き座標下
 	// シザー矩形設定コマンドを、コマンドリストに積む
 	iniDX->commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -66,6 +64,8 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = draw->srvHeap->GetGPUDescriptorHandleForHeapStart();
 	//SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
 	iniDX->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+	//定数バッファビュー(CBV)の設定コマンド
+	iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform->GetGPUVirtualAddress());
 
 	//インデックスバッファビューの設定コマンド
 	iniDX->commandList->IASetIndexBuffer(&draw->ibView);

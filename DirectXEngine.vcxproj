@@ -146,6 +146,9 @@
     <ClCompile Include="IniDX.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrix4.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="WinApp.cpp" />
     <ClCompile Include="WinSize.cpp" />
   </ItemGroup>
@@ -168,6 +171,9 @@
     <ClInclude Include="Draw.h" />
     <ClInclude Include="IniDX.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
     <ClInclude Include="WinApp.h" />
     <ClInclude Include="WinSize.h" />
   </ItemGroup>

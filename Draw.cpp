@@ -1,5 +1,6 @@
 #include "Draw.h"
 #include <DirectXTex.h>
+#include "WinSize.h"
 
 Draw::Draw() {}
 
@@ -8,10 +9,10 @@ Draw::~Draw() {}
 void Draw::Ini(IniDX* iniDX) {
 	//頂点データ
 	vertices = std::vector<Vertex>({
-		{ { -0.4f, -0.7f, 0.0f},{0.0f,1.0f} },		//左下
-		{ { -0.4f, +0.7f, 0.0f},{0.0f,0.0f} },		//左上
-		{ { +0.4f, -0.7f, 0.0f},{1.0f,1.0f} },		//右下
-		{ { +0.4f, +0.7f, 0.0f},{1.0f,0.0f} },		//右上
+		{ { -50.0f,-50.0f,500.0f},{0.0f,1.0f} },		//左下
+		{ { -50.0f, 50.0f,500.0f},{0.0f,0.0f} },		//左上
+		{ { 50.0f, -50.0f, 500.0f},{1.0f,1.0f} },		//右下
+		{ { 50.0f, 50.0f, 500.0f},{1.0f,0.0f} },		//右上
 		});
 
 	indices = std::vector<uint16_t>({
@@ -317,14 +318,14 @@ void Draw::Ini(IniDX* iniDX) {
 		//ミップマップレベルを指定してイメージを取得
 		const Image* img = scratchImg.GetImage(i, 0, 0);
 		// テクスチャバッファにデータ転送
-			iniDX->result = texBuff->WriteToSubresource(
-				(UINT)i,
-				nullptr,
-				img->pixels,
-				(UINT)img->rowPitch,
-				(UINT)img->slicePitch
-			);
-			assert(SUCCEEDED(iniDX->result));
+		iniDX->result = texBuff->WriteToSubresource(
+			(UINT)i,
+			nullptr,
+			img->pixels,
+			(UINT)img->rowPitch,
+			(UINT)img->slicePitch
+		);
+		assert(SUCCEEDED(iniDX->result));
 	}
 
 	//元データ解放
@@ -363,17 +364,41 @@ void Draw::Ini(IniDX* iniDX) {
 	descriptorRange.BaseShaderRegister = 0;
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
+	ConstBaffer(iniDX);
+	//constMapTransform->mat = XMMatrixIdentity();
+	//constMapTransform->mat.r[0].m128_f32[0] = 2.0f / WIN_WIDTH;
+	//constMapTransform->mat.r[1].m128_f32[1] = -2.0f / WIN_HEIGHT;
+	//constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
+	//constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
+	constMapTransform->mat = XMMatrixOrthographicOffCenterLH(
+		0.0f, WIN_WIDTH,
+		WIN_HEIGHT, 0.0f,
+		0.0f, 1.0f
+	);
+	XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
+		XMConvertToRadians(45.0f),
+		(float)WIN_WIDTH / WIN_HEIGHT,
+		0.1f, 1000.0f
+	);
+
+	//定数バッファに転送
+	constMapTransform->mat = matProjection;
 
 	//ルートパラメータ0番の設定
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー
 	rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
 	rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
-	//ルートパラメータ1番の設定
+	//テクスチャレジスタ0番
 	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//定数バッファビュー
 	rootParams[1].DescriptorTable.pDescriptorRanges = &descriptorRange;			//定数バッファ番号
 	rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デフォルト値
 	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;				//全てのシェーダーから見える
+	//定数バッファ1番
+	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParams[2].Descriptor.ShaderRegister = 1;
+	rootParams[2].Descriptor.RegisterSpace = 0;
+	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
 	//テクスチャサンプラーの設定
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
@@ -410,6 +435,33 @@ void Draw::Ini(IniDX* iniDX) {
 	pipelineState = nullptr;
 	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(iniDX->result));
+}
 
-	
+void Draw::ConstBaffer(IniDX* iniDX) {
+	//ヒープ設定
+	D3D12_HEAP_PROPERTIES cbHeapProp{};
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+	//リソース設定
+	D3D12_RESOURCE_DESC cbResourceDesc{};
+	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	cbResourceDesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;
+	cbResourceDesc.Height = 1;
+	cbResourceDesc.DepthOrArraySize = 1;
+	cbResourceDesc.MipLevels = 1;
+	cbResourceDesc.SampleDesc.Count = 1;
+	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&cbHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&cbResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&constBuffTransform)
+	);
+	assert(SUCCEEDED(iniDX->result));
+
+	//定数バッファのマッピング
+	iniDX->result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
+	assert(SUCCEEDED(iniDX->result));
 }

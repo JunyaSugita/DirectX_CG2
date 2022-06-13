@@ -9,6 +9,4 @@ public:
 	~Graphics();
 public:
 	void Process(IniDX* iniDX, Draw* draw);
-public:
-	WinSize* winSize;
 };

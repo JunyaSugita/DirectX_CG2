@@ -1,6 +1,9 @@
 cbuffer ConstBufferDataMaterial : register(b0) {
 	float4 color;
 }
+cbuffer ConstBufferDataMaterial : register(b1) {
+	matrix mat;
+}
 
 //頂点シェーダーの出力構造体
 //(頂点シェーダーからピクセルシェーダーへのやり取りに使用する)
