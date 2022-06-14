@@ -55,5 +55,13 @@ public:
 
 	//設定を元にSRV用デスクリプタヒープを生成
 	ID3D12DescriptorHeap* srvHeap = nullptr;
+
+	//カメラ関係
+	XMMATRIX matview;
+	XMFLOAT3 eye;
+	XMFLOAT3 target;
+	XMFLOAT3 up;
+
+	XMMATRIX matProjection;
 };
 

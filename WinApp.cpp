@@ -72,6 +72,22 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		}
 		draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,0.5f);
 
+		if (input->key[DIK_D] || input->key[DIK_A]) {
+			if (input->key[DIK_D]) {
+				angle += XMConvertToRadians(1.0f);
+			}
+			else if (input->key[DIK_A]) {
+				angle -= XMConvertToRadians(1.0f);
+			}
+
+			draw->eye.x = -100 * sinf(angle);
+			draw->eye.z = -100 * cosf(angle);
+			draw->matview = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
+		}
+		//定数バッファに転送
+		draw->constMapTransform->mat = draw->matview * draw->matProjection;
+
+
 		//×ボタンで終了
 		if (msg.message == WM_QUIT) {
 			break;

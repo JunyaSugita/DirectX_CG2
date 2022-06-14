@@ -30,8 +30,6 @@ void Input::Ini(WNDCLASSEX w, HRESULT result, HWND hwnd) {
 
 void Input::GetKey(IniDX* iniDX) {
 	keyboard->Acquire();
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ðŽæ“¾‚·‚é
-	BYTE key[256] = {};
 	iniDX->result = keyboard->GetDeviceState(sizeof(key), key);
 
 	float color;

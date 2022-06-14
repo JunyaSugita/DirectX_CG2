@@ -9,16 +9,23 @@ Draw::~Draw() {}
 void Draw::Ini(IniDX* iniDX) {
 	//頂点データ
 	vertices = std::vector<Vertex>({
-		{ { -50.0f,-50.0f,500.0f},{0.0f,1.0f} },		//左下
-		{ { -50.0f, 50.0f,500.0f},{0.0f,0.0f} },		//左上
-		{ { 50.0f, -50.0f, 500.0f},{1.0f,1.0f} },		//右下
-		{ { 50.0f, 50.0f, 500.0f},{1.0f,0.0f} },		//右上
+		{ { -50.0f,-50.0f,0.0f},{0.0f,1.0f} },		//左下
+		{ { -50.0f, 50.0f,0.0f},{0.0f,0.0f} },		//左上
+		{ { 50.0f, -50.0f, 0.0f},{1.0f,1.0f} },		//右下
+		{ { 50.0f, 50.0f, 0.0f},{1.0f,0.0f} },		//右上
 		});
 
 	indices = std::vector<uint16_t>({
 		0,1,2,
 		1,2,3,
 		});
+
+	//ビュー変換行列
+	eye = { 0, 0, -100 };
+	target = { 0, 0, 0 };
+	up = { 0, 1, 0 };
+	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+	
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
@@ -375,14 +382,14 @@ void Draw::Ini(IniDX* iniDX) {
 		WIN_HEIGHT, 0.0f,
 		0.0f, 1.0f
 	);
-	XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
+	matProjection = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),
 		(float)WIN_WIDTH / WIN_HEIGHT,
 		0.1f, 1000.0f
 	);
 
 	//定数バッファに転送
-	constMapTransform->mat = matProjection;
+	constMapTransform->mat = matview * matProjection;
 
 	//ルートパラメータ0番の設定
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー
@@ -435,6 +442,8 @@ void Draw::Ini(IniDX* iniDX) {
 	pipelineState = nullptr;
 	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(iniDX->result));
+
+
 }
 
 void Draw::ConstBaffer(IniDX* iniDX) {
