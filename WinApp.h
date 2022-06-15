@@ -21,5 +21,7 @@ public:
 
 	float a = 0.0f;
 	float angle = 0.0f;
+
+
 };
 

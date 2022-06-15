@@ -2,7 +2,11 @@
 #include <DirectXTex.h>
 #include "WinSize.h"
 
-Draw::Draw() {}
+Draw::Draw() {
+	scale = { 1.0f,1.0f,1.0f };
+	rotation = { 0.0f,0.0f,0.0f };
+	position = { 0.0f,0.0f,0.0f };
+}
 
 Draw::~Draw() {}
 
@@ -24,7 +28,25 @@ void Draw::Ini(IniDX* iniDX) {
 	eye = { 0, 0, -100 };
 	target = { 0, 0, 0 };
 	up = { 0, 1, 0 };
+
 	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+
+	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+	matRot = XMMatrixIdentity();
+	matRot *= XMMatrixRotationZ(rotation.z);
+	matRot *= XMMatrixRotationX(rotation.x);
+	matRot *= XMMatrixRotationY(rotation.y);
+	matTrans = XMMatrixTranslation(-50.0f, 0, 0);
+
+	matWorld.r[0] = { 1,0,0,0 };
+	matWorld.r[1] = { 0,1,0,0 };
+	matWorld.r[2] = { 0,0,1,0 };
+	matWorld.r[3] = { 0,0,0,1 };
+
+	matWorld *= matScale;
+	matWorld *= matRot;
+	matWorld *= matTrans;
+
 	
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
@@ -389,7 +411,7 @@ void Draw::Ini(IniDX* iniDX) {
 	);
 
 	//定数バッファに転送
-	constMapTransform->mat = matview * matProjection;
+	constMapTransform->mat = matWorld * matview * matProjection;
 
 	//ルートパラメータ0番の設定
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー

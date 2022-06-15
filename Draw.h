@@ -57,11 +57,27 @@ public:
 	ID3D12DescriptorHeap* srvHeap = nullptr;
 
 	//カメラ関係
-	XMMATRIX matview;
 	XMFLOAT3 eye;
 	XMFLOAT3 target;
 	XMFLOAT3 up;
 
+	XMMATRIX matWorld;
+	XMMATRIX matview;
 	XMMATRIX matProjection;
+
+	//スケーリング
+	XMMATRIX matScale;
+	//回転
+	XMMATRIX matRot;
+	//平行移動
+	XMMATRIX matTrans;
+
+	//スケーリング座標
+	XMFLOAT3 scale;
+	//回転角
+	XMFLOAT3 rotation;
+	//座標
+	XMFLOAT3 position;
+
 };
 

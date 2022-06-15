@@ -84,8 +84,29 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 			draw->eye.z = -100 * cosf(angle);
 			draw->matview = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
 		}
+		draw->position = { 0.0f,0.0f,0.0f };
+
+		if (input->key[DIK_UP] || input->key[DIK_DOWN] || input->key[DIK_RIGHT] || input->key[DIK_LEFT]) {
+			if (input->key[DIK_UP]) {
+				draw->position.z += 1.0f;
+			}
+			else if (input->key[DIK_DOWN]) {
+				draw->position.z -= 1.0f;
+			}
+			if (input->key[DIK_RIGHT]) {
+				draw->position.x += 1.0f;
+			}
+			else if (input->key[DIK_LEFT]) {
+				draw->position.x -= 1.0f;
+			}
+		}
+
+		XMMATRIX matTrans;
+		matTrans = XMMatrixTranslation(draw->position.x, draw->position.y, draw->position.z);
+		draw->matWorld *= matTrans;
+
 		//定数バッファに転送
-		draw->constMapTransform->mat = draw->matview * draw->matProjection;
+		draw->constMapTransform->mat = draw->matWorld * draw->matview * draw->matProjection;
 
 
 		//×ボタンで終了
