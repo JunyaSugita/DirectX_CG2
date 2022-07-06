@@ -170,9 +170,15 @@ namespace
         float z = (tmp.z >= 0.f) ? ((tmp.z > maxf9) ? maxf9 : tmp.z) : 0.f;
 
         const float max_xy = (x > y) ? x : y;
-        const float max_xyz = (max_xy > z) ? max_xy : z;
+        const float max_
+            
+            
+            = (max_xy > z) ? max_xy : z;
 
-        const float maxColor = (max_xyz > minf9) ? max_xyz : minf9;
+        const float maxColor = (max_
+
+
+ > minf9) ? max_xyz : minf9;
 
         union { float f; int32_t i; } fi;
         fi.f = maxColor;

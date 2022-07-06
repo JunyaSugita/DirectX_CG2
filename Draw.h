@@ -6,8 +6,9 @@ using namespace DirectX;
 #pragma comment(lib, "d3dcompiler.lib")
 
 struct Vertex {
-	XMFLOAT3 pos;
-	XMFLOAT2 uv;
+	XMFLOAT3 pos;	//xyz座標
+	XMFLOAT3 normal;//法線ベクトル
+	XMFLOAT2 uv;	//uv座標
 };
 
 class Draw{
@@ -78,6 +79,25 @@ public:
 	XMFLOAT3 rotation;
 	//座標
 	XMFLOAT3 position;
+
+	//リソース設定
+	D3D12_RESOURCE_DESC depthResourceDesc{};
+	D3D12_HEAP_PROPERTIES depthHeapProp{};
+	D3D12_CLEAR_VALUE depthClearValue{};
+
+	//リソース生成
+	ID3D12Resource* depthBuff = nullptr;
+
+	//深度ビュー用デスクリプタヒープ作成
+	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
+	ID3D12DescriptorHeap* dsvHeap = nullptr;
+
+	//深度ビュー作成
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+
+	// グラフィックスパイプライン設定
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+
 
 };
 

@@ -70,7 +70,7 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		if (a >= 1.0f) {
 			a = 1.0f;
 		}
-		draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,0.5f);
+		draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,1);
 
 		if (input->key[DIK_D] || input->key[DIK_A]) {
 			if (input->key[DIK_D]) {
@@ -88,10 +88,10 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 
 		if (input->key[DIK_UP] || input->key[DIK_DOWN] || input->key[DIK_RIGHT] || input->key[DIK_LEFT]) {
 			if (input->key[DIK_UP]) {
-				draw->position.z += 1.0f;
+				draw->position.y += 1.0f;
 			}
 			else if (input->key[DIK_DOWN]) {
-				draw->position.z -= 1.0f;
+				draw->position.y -= 1.0f;
 			}
 			if (input->key[DIK_RIGHT]) {
 				draw->position.x += 1.0f;

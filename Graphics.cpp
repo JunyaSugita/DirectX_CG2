@@ -19,11 +19,13 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	// レンダーターゲットビューのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = iniDX->rtvHeap->GetCPUDescriptorHandleForHeapStart();
 	rtvHandle.ptr += bbIndex * iniDX->device->GetDescriptorHandleIncrementSize(iniDX->rtvHeapDesc.Type);
-	iniDX->commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = draw->dsvHeap->GetCPUDescriptorHandleForHeapStart();
+	iniDX->commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	// 3.画面クリア R G B A
 	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f }; // 青っぽい色
 	iniDX->commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+	iniDX->commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 	// 4.描画コマンド
 	// ビューポート設定コマンド

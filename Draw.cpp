@@ -13,15 +13,63 @@ Draw::~Draw() {}
 void Draw::Ini(IniDX* iniDX) {
 	//頂点データ
 	vertices = std::vector<Vertex>({
-		{ { -50.0f,-50.0f,0.0f},{0.0f,1.0f} },		//左下
-		{ { -50.0f, 50.0f,0.0f},{0.0f,0.0f} },		//左上
-		{ { 50.0f, -50.0f, 0.0f},{1.0f,1.0f} },		//右下
-		{ { 50.0f, 50.0f, 0.0f},{1.0f,0.0f} },		//右上
+		//前
+		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
+		{ { -5.0f, 5.0f,-5.0f},{},{0.0f,0.0f} },		//左上
+		{ {  5.0f,-5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
+		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,0.0f} },		//右上
+
+		//後
+		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,1.0f} },		//左下
+		{ { -5.0f, 5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
+		{ {  5.0f,-5.0f, 5.0f},{},{1.0f,1.0f} },		//右下
+		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+
+		//左
+		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
+		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
+		{ { -5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
+		{ { -5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+
+		//右
+		{ {  5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
+		{ {  5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
+		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
+		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+
+		//下
+		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
+		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
+		{ {  5.0f,-5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
+		{ {  5.0f,-5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+
+		//上
+		{ { -5.0f, 5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
+		{ { -5.0f, 5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
+		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
+		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
 		});
 
+	
 	indices = std::vector<uint16_t>({
+		//前
 		0,1,2,
-		1,2,3,
+		2,1,3,
+		//後
+		5,4,6,
+		5,6,7,
+		//左
+		8,9,10,
+		10,9,11,
+		//右
+		13,12,14,
+		13,14,15,
+		//下
+		17,16,18,
+		17,18,19,
+		//上
+		20,21,22,
+		22,21,23,
 		});
 
 	//ビュー変換行列
@@ -47,7 +95,7 @@ void Draw::Ini(IniDX* iniDX) {
 	matWorld *= matRot;
 	matWorld *= matTrans;
 
-	
+
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
@@ -111,6 +159,29 @@ void Draw::Ini(IniDX* iniDX) {
 	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
 	ibView.SizeInBytes = sizeIB;
+
+	//三角形1つごとに計算していく
+	for (int i = 0; i < indices.size() / 3; i++) {
+		//三角形のインデックスを取り出して一時的な変数を入れる
+		unsigned short index0 = indices[i * 3 + 0];
+		unsigned short index1 = indices[i * 3 + 1];
+		unsigned short index2 = indices[i * 3 + 2];
+		//三角形を編成する頂点座標をベクトルに代入
+		XMVECTOR p0 = XMLoadFloat3(&vertices[index0].pos);
+		XMVECTOR p1 = XMLoadFloat3(&vertices[index1].pos);
+		XMVECTOR p2 = XMLoadFloat3(&vertices[index2].pos);
+		//p0->p1ベクトル、p0->p2ベクトルを計算(ベクトルを減算)
+		XMVECTOR v1 = XMVectorSubtract(p1, p0);
+		XMVECTOR v2 = XMVectorSubtract(p2, p0);
+		//外積は両方から垂直なベクトル
+		XMVECTOR normal = XMVector3Cross(v1, v2);
+		//正規化(長さを1にする)
+		normal = XMVector3Normalize(normal);
+		//求めた法線を頂点データに代入
+		XMStoreFloat3(&vertices[index0].normal, normal);
+		XMStoreFloat3(&vertices[index1].normal, normal);
+		XMStoreFloat3(&vertices[index2].normal, normal);
+	}
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	Vertex* vertMap = nullptr;
@@ -184,11 +255,15 @@ void Draw::Ini(IniDX* iniDX) {
 	// 頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,D3D12_APPEND_ALIGNED_ELEMENT,D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1行で書いたほうが見やすい)
+		{"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,D3D12_APPEND_ALIGNED_ELEMENT,D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0},		//法線ベクトル
 		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,D3D12_APPEND_ALIGNED_ELEMENT,D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
 	};
 
-	// グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+	//デプスステンシルステートの設定
+	pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
+	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;//書き込み許可
+	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ合格
+	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 
 	// シェーダーの設定
 	pipelineDesc.VS.pShaderBytecode = vsBlob->GetBufferPointer();
@@ -200,7 +275,7 @@ void Draw::Ini(IniDX* iniDX) {
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 
 	// ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE; // カリングしない
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK; // 背面カリング
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
@@ -265,7 +340,7 @@ void Draw::Ini(IniDX* iniDX) {
 	assert(SUCCEEDED(iniDX->result));
 
 	//値を書き込むと自動的に転送される
-	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);	//RGBAで半透明の赤
+	constMapMaterial->color = XMFLOAT4(1, 0, 0, 1);	//RGBAで半透明の赤
 	//////////////////
 	//テクスチャの初期化
 	//////////////////
@@ -495,4 +570,43 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 	//定数バッファのマッピング
 	iniDX->result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	assert(SUCCEEDED(iniDX->result));
+
+	//リソース設定
+	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	depthResourceDesc.Width = WIN_WIDTH;
+	depthResourceDesc.Height = WIN_HEIGHT;
+	depthResourceDesc.DepthOrArraySize = 1;
+	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
+	depthResourceDesc.SampleDesc.Count = 1;
+	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+	//深度値用ヒーププロパティ
+	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+	//深度値のクリア設定
+	depthClearValue.DepthStencil.Depth = 1.0f;		//深度値1.0f(最大値)でクリア
+	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+
+	//リソース生成
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&depthHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&depthResourceDesc,
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値書き込みに使用
+		&depthClearValue,
+		IID_PPV_ARGS(&depthBuff)
+	);
+
+	//深度ビュー用デスクリプタヒープ作成
+	dsvHeapDesc.NumDescriptors = 1;//深度ビューは1つ
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;//デプスステンシルビュー
+	iniDX->result = iniDX->device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
+
+	//深度ビュー作成
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	iniDX->device->CreateDepthStencilView(
+		depthBuff,
+		&dsvDesc,
+		dsvHeap->GetCPUDescriptorHandleForHeapStart()
+	);
 }
