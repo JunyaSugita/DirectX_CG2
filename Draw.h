@@ -46,8 +46,11 @@ public:
 		XMMATRIX mat;		// 3D変換行列
 	};
 
-	ID3D12Resource* constBuffTransform = nullptr;
-	ConstBufferDataTransform* constMapTransform = nullptr;
+	ID3D12Resource* constBuffTransform0 = nullptr;
+	ConstBufferDataTransform* constMapTransform0 = nullptr;
+
+	ID3D12Resource* constBuffTransform1 = nullptr;
+	ConstBufferDataTransform* constMapTransform1 = nullptr;
 
 	//色
 	ConstBufferDataMaterial* constMapMaterial;
@@ -63,22 +66,37 @@ public:
 	XMFLOAT3 up;
 
 	XMMATRIX matWorld;
+	XMMATRIX matWorld1;
 	XMMATRIX matview;
 	XMMATRIX matProjection;
 
-	//スケーリング
+	//スケーリング0
 	XMMATRIX matScale;
-	//回転
+	//回転0
 	XMMATRIX matRot;
-	//平行移動
+	//平行移動0
 	XMMATRIX matTrans;
 
-	//スケーリング座標
+	//スケーリング1
+	XMMATRIX matScale1;
+	//回転1
+	XMMATRIX matRot1;
+	//平行移動1
+	XMMATRIX matTrans1;
+
+	//スケーリング座標0
 	XMFLOAT3 scale;
-	//回転角
+	//回転角0
 	XMFLOAT3 rotation;
-	//座標
+	//座標0
 	XMFLOAT3 position;
+
+	//スケーリング座標1
+	XMFLOAT3 scale1;
+	//回転角1
+	XMFLOAT3 rotation1;
+	//座標1
+	XMFLOAT3 position1;
 
 	//リソース設定
 	D3D12_RESOURCE_DESC depthResourceDesc{};

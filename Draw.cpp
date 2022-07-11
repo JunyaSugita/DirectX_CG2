@@ -6,6 +6,10 @@ Draw::Draw() {
 	scale = { 1.0f,1.0f,1.0f };
 	rotation = { 0.0f,0.0f,0.0f };
 	position = { 0.0f,0.0f,0.0f };
+
+	scale1 = { 1.0f,1.0f,1.0f };
+	rotation1 = { 0.0f,XM_PI/4.0f,0.0f };
+	position1 = { -20.0f,0.0f,0.0f };
 }
 
 Draw::~Draw() {}
@@ -84,16 +88,32 @@ void Draw::Ini(IniDX* iniDX) {
 	matRot *= XMMatrixRotationZ(rotation.z);
 	matRot *= XMMatrixRotationX(rotation.x);
 	matRot *= XMMatrixRotationY(rotation.y);
-	matTrans = XMMatrixTranslation(-50.0f, 0, 0);
+	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+
+	matScale1 = XMMatrixScaling(scale1.x, scale1.y, scale1.z);
+	matRot1 = XMMatrixIdentity();
+	matRot1 *= XMMatrixRotationZ(rotation1.z);
+	matRot1 *= XMMatrixRotationX(rotation1.x);
+	matRot1 *= XMMatrixRotationY(rotation1.y);
+	matTrans1 = XMMatrixTranslation(position1.x,position1.y,position1.z);
 
 	matWorld.r[0] = { 1,0,0,0 };
 	matWorld.r[1] = { 0,1,0,0 };
 	matWorld.r[2] = { 0,0,1,0 };
 	matWorld.r[3] = { 0,0,0,1 };
 
+	matWorld1.r[0] = { 1,0,0,0 };
+	matWorld1.r[1] = { 0,1,0,0 };
+	matWorld1.r[2] = { 0,0,1,0 };
+	matWorld1.r[3] = { 0,0,0,1 };
+
 	matWorld *= matScale;
 	matWorld *= matRot;
 	matWorld *= matTrans;
+
+	matWorld1 *= matScale1;
+	matWorld1 *= matRot1;
+	matWorld1 *= matTrans1;
 
 
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
@@ -474,7 +494,7 @@ void Draw::Ini(IniDX* iniDX) {
 	//constMapTransform->mat.r[1].m128_f32[1] = -2.0f / WIN_HEIGHT;
 	//constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
 	//constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
-	constMapTransform->mat = XMMatrixOrthographicOffCenterLH(
+	constMapTransform0->mat = XMMatrixOrthographicOffCenterLH(
 		0.0f, WIN_WIDTH,
 		WIN_HEIGHT, 0.0f,
 		0.0f, 1.0f
@@ -486,7 +506,9 @@ void Draw::Ini(IniDX* iniDX) {
 	);
 
 	//定数バッファに転送
-	constMapTransform->mat = matWorld * matview * matProjection;
+	constMapTransform0->mat = matWorld * matview * matProjection;
+	constMapTransform1->mat = matWorld1 * matview * matProjection;
+
 
 	//ルートパラメータ0番の設定
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー
@@ -563,13 +585,25 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 		&cbResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffTransform)
+		IID_PPV_ARGS(&constBuffTransform0)
 	);
-	assert(SUCCEEDED(iniDX->result));
 
 	//定数バッファのマッピング
-	iniDX->result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
+	iniDX->result = constBuffTransform0->Map(0, nullptr, (void**)&constMapTransform0);
 	assert(SUCCEEDED(iniDX->result));
+
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&cbHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&cbResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&constBuffTransform1)
+	);
+	//定数バッファのマッピング
+	iniDX->result = constBuffTransform1->Map(0, nullptr, (void**)&constMapTransform1);
+	assert(SUCCEEDED(iniDX->result));
+	
 
 	//リソース設定
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
