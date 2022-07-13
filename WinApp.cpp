@@ -106,8 +106,8 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		draw->matWorld *= matTrans;
 
 		//定数バッファに転送
-		draw->constMapTransform0->mat = draw->matWorld * draw->matview * draw->matProjection;
-		draw->constMapTransform1->mat = draw->matWorld1 * draw->matview * draw->matProjection;
+		//draw->constMapTransform0->mat = draw->matWorld * draw->matview * draw->matProjection;
+		//draw->constMapTransform1->mat = draw->matWorld1 * draw->matview * draw->matProjection;
 
 
 		//×ボタンで終了

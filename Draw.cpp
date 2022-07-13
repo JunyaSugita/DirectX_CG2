@@ -2,6 +2,7 @@
 #include <DirectXTex.h>
 #include "WinSize.h"
 
+
 Draw::Draw() {
 	scale = { 1.0f,1.0f,1.0f };
 	rotation = { 0.0f,0.0f,0.0f };
@@ -83,7 +84,7 @@ void Draw::Ini(IniDX* iniDX) {
 
 	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 
-	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+	/*matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	matRot = XMMatrixIdentity();
 	matRot *= XMMatrixRotationZ(rotation.z);
 	matRot *= XMMatrixRotationX(rotation.x);
@@ -113,7 +114,11 @@ void Draw::Ini(IniDX* iniDX) {
 
 	matWorld1 *= matScale1;
 	matWorld1 *= matRot1;
-	matWorld1 *= matTrans1;
+	matWorld1 *= matTrans1;*/
+
+	for (size_t i = 0; i < _countof(object3ds); i++) {
+		object3ds[i].UpdateObject3d(matview, matProjection);
+	}
 
 
 	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
@@ -494,11 +499,11 @@ void Draw::Ini(IniDX* iniDX) {
 	//constMapTransform->mat.r[1].m128_f32[1] = -2.0f / WIN_HEIGHT;
 	//constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
 	//constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
-	constMapTransform0->mat = XMMatrixOrthographicOffCenterLH(
-		0.0f, WIN_WIDTH,
-		WIN_HEIGHT, 0.0f,
-		0.0f, 1.0f
-	);
+	//constMapTransform0->mat = XMMatrixOrthographicOffCenterLH(
+	//	0.0f, WIN_WIDTH,
+	//	WIN_HEIGHT, 0.0f,
+	//	0.0f, 1.0f
+	//);
 	matProjection = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),
 		(float)WIN_WIDTH / WIN_HEIGHT,
@@ -506,8 +511,8 @@ void Draw::Ini(IniDX* iniDX) {
 	);
 
 	//定数バッファに転送
-	constMapTransform0->mat = matWorld * matview * matProjection;
-	constMapTransform1->mat = matWorld1 * matview * matProjection;
+	//constMapTransform0->mat = matWorld * matview * matProjection;
+	//constMapTransform1->mat = matWorld1 * matview * matProjection;
 
 
 	//ルートパラメータ0番の設定
@@ -579,30 +584,50 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	iniDX->result = iniDX->device->CreateCommittedResource(
-		&cbHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&constBuffTransform0)
-	);
+	//配列内の全オブジェクトに対して
+	for (int i = 0; i < _countof(object3ds); i++) {
+		//初期化
+		object3ds[i].InitializeObject3d(iniDX->device);
+
+		//ここから↓は親子構造のサンプル
+		//先頭以外なら
+		if (i > 0) {
+			//1つ前のオブジェクトを親オブジェクトとする
+			object3ds[i].worldTransform.parent = &object3ds[i - 1].worldTransform;
+			//親オブジェクトの9割りの大きさ
+			object3ds[i].worldTransform.scale = { 0.9f,0.9f,0.9f };
+			//親オブジェクトに対してZ軸まわりに30度回転
+			object3ds[i].worldTransform.rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
+
+			//親オブジェクトに対してZ方向-8.0ずらす
+			object3ds[i].worldTransform.trans = { 0.0f,0.0f,-8.0f };
+		}
+	}
+
+	//iniDX->result = iniDX->device->CreateCommittedResource(
+	//	&cbHeapProp,
+	//	D3D12_HEAP_FLAG_NONE,
+	//	&cbResourceDesc,
+	//	D3D12_RESOURCE_STATE_GENERIC_READ,
+	//	nullptr,
+	//	IID_PPV_ARGS(&constBuffTransform0)
+	//);
 
 	//定数バッファのマッピング
-	iniDX->result = constBuffTransform0->Map(0, nullptr, (void**)&constMapTransform0);
-	assert(SUCCEEDED(iniDX->result));
+	//iniDX->result = constBuffTransform0->Map(0, nullptr, (void**)&constMapTransform0);
+	//assert(SUCCEEDED(iniDX->result));
 
-	iniDX->result = iniDX->device->CreateCommittedResource(
-		&cbHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&constBuffTransform1)
-	);
+	//iniDX->result = iniDX->device->CreateCommittedResource(
+	//	&cbHeapProp,
+	//	D3D12_HEAP_FLAG_NONE,
+	//	&cbResourceDesc,
+	//	D3D12_RESOURCE_STATE_GENERIC_READ,
+	//	nullptr,
+	//	IID_PPV_ARGS(&constBuffTransform1)
+	//);
 	//定数バッファのマッピング
-	iniDX->result = constBuffTransform1->Map(0, nullptr, (void**)&constMapTransform1);
-	assert(SUCCEEDED(iniDX->result));
+	//iniDX->result = constBuffTransform1->Map(0, nullptr, (void**)&constMapTransform1);
+	//assert(SUCCEEDED(iniDX->result));
 	
 
 	//リソース設定

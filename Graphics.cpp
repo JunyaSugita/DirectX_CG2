@@ -67,18 +67,18 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	//SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
 	iniDX->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 	//定数バッファビュー(CBV)の設定コマンド
-	iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform0->GetGPUVirtualAddress());
+	//iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform0->GetGPUVirtualAddress());
 
 	//インデックスバッファビューの設定コマンド
 	iniDX->commandList->IASetIndexBuffer(&draw->ibView);
 
 	// 描画コマンド
 	//iniDX->commandList->DrawInstanced(draw->vertices.size(), 1, 0, 0);
-	iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
+	//iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
 
 	//定数バッファビュー(CBV)の設定コマンド
-	iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform1->GetGPUVirtualAddress());
-	iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
+	//iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform1->GetGPUVirtualAddress());
+	//iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
 
 
 	// 5.リソースバリアを戻す

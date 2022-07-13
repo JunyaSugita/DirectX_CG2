@@ -4,6 +4,7 @@
 using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
+#include "Object3d.h"
 
 struct Vertex {
 	XMFLOAT3 pos;	//xyz座標
@@ -41,10 +42,7 @@ public:
 	struct ConstBufferDataMaterial {
 		XMFLOAT4 color;		// 色 (RGBA)
 	};
-	//定数バッファ用データ構造体(3D変換行列)
-	struct ConstBufferDataTransform {
-		XMMATRIX mat;		// 3D変換行列
-	};
+
 
 	ID3D12Resource* constBuffTransform0 = nullptr;
 	ConstBufferDataTransform* constMapTransform0 = nullptr;
@@ -116,6 +114,9 @@ public:
 	// グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
+	//配列
+	static const size_t kObjectCount = 50;
 
+	Object3d object3ds[kObjectCount];
 };
 
