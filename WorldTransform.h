@@ -35,6 +35,6 @@ public:
 
 	void SetMatRot(Matrix4& matRot, const Vector3& rot, const char way);
 
-	void SetWorldMat(WorldTransform& worldtransform);
+	void SetWorldMat();
 };
 

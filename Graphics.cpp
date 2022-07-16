@@ -76,6 +76,10 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	//iniDX->commandList->DrawInstanced(draw->vertices.size(), 1, 0, 0);
 	//iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
 
+	for (int i = 0; i < _countof(draw->object3ds); i++) {
+		Draw3dObject(&draw->object3ds[i], iniDX->commandList, draw->vbView, draw->ibView, draw->indices.size());
+	}
+
 	//定数バッファビュー(CBV)の設定コマンド
 	//iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform1->GetGPUVirtualAddress());
 	//iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画

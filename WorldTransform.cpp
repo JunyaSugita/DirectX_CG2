@@ -80,9 +80,9 @@ void WorldTransform::SetMatRot(Matrix4& matRot, const Vector3& rot, const char w
 	}
 }
 
-void WorldTransform::SetWorldMat(WorldTransform& worldTransform) {
+void WorldTransform::SetWorldMat() {
 	//ワールドトランスフォームの初期化
-	worldTransform.matWorld = 
+	matWorld = 
 	{
 		1,0,0,0,
 		0,1,0,0,
@@ -91,19 +91,19 @@ void WorldTransform::SetWorldMat(WorldTransform& worldTransform) {
 	};
 
 	Matrix4 matScale;
-	SetMatScale(matScale, worldTransform.scale);
+	SetMatScale(matScale, scale);
 
 	Matrix4 matTrans;
-	SetMatTrans(matTrans, worldTransform.trans);
+	SetMatTrans(matTrans, trans);
 
 	Matrix4 matRotZ;
-	SetMatRot(matRotZ, worldTransform.rotation, 'z');
+	SetMatRot(matRotZ, rotation, 'z');
 
 	Matrix4 matRotX;
-	SetMatRot(matRotX, worldTransform.rotation, 'x');
+	SetMatRot(matRotX, rotation, 'x');
 
 	Matrix4 matRotY;
-	SetMatRot(matRotY, worldTransform.rotation, 'y');
+	SetMatRot(matRotY, rotation, 'y');
 
 	Matrix4 matRot = matRotZ * matRotX * matRotY;
 
@@ -111,17 +111,17 @@ void WorldTransform::SetWorldMat(WorldTransform& worldTransform) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (i == j) {
-				worldTransform.matWorld.m[i][j] = 1;
+				matWorld.m[i][j] = 1;
 			}
 			else {
-				worldTransform.matWorld.m[i][j] = 0;
+				matWorld.m[i][j] = 0;
 			}
 		}
 	}
 
-	worldTransform.matWorld *= matScale * matRot * matTrans;
+	matWorld *= matScale * matRot * matTrans;
 
-	if (worldTransform.parent != NULL) {
-		worldTransform.matWorld *= worldTransform.parent->matWorld;
+	if (parent != nullptr) {
+		matWorld *= parent->matWorld;
 	}
 }

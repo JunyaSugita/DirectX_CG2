@@ -11,7 +11,9 @@ public:
 
 	////アフィン変換情報
 	//XMFLOAT3 scale = { 1,1,1 };
-	//XMFLOAT3 rotation = { 0,0,0 };
+	//XMFLOAT3 
+	// 
+	// ation = { 0,0,0 };
 	//XMFLOAT3 position = { 0,0,0 };
 
 	////ワールド変換行列
@@ -25,7 +27,8 @@ public:
 public:
 	void InitializeObject3d(ID3D12Device* device);
 
-	void UpdateObject3d(XMMATRIX& matView, XMMATRIX& matProjection);
-	
+	void UpdateObject3d();
+
 };
 
+void Draw3dObject(Object3d* object, ID3D12GraphicsCommandList* commandList, D3D12_VERTEX_BUFFER_VIEW& vbView, D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices);

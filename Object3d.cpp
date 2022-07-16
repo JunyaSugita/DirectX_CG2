@@ -33,6 +33,18 @@ void Object3d::InitializeObject3d(ID3D12Device* device){
 	assert(SUCCEEDED(result));
 }
 
-void Object3d::UpdateObject3d(XMMATRIX& matView, XMMATRIX& matProjection) {
-	worldTransform.SetWorldMat(worldTransform);
+void Object3d::UpdateObject3d() {
+	worldTransform.SetWorldMat();
+}
+
+void Draw3dObject(Object3d* object,ID3D12GraphicsCommandList* commandList, D3D12_VERTEX_BUFFER_VIEW& vbView, D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices) {
+	//頂点バッファの設定
+	commandList->IASetVertexBuffers(0, 1, &vbView);
+	//インデックスバッファの設定
+	commandList->IASetIndexBuffer(&ibView);
+	//定数バッファビュー(CBV)の設定コマンド
+	commandList->SetGraphicsRootConstantBufferView(2, object->constBuffTransform->GetGPUVirtualAddress());
+
+	//描画コマンド
+	commandList->DrawIndexedInstanced(numIndices, 1, 0, 0, 0);
 }

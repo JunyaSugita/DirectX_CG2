@@ -4,13 +4,13 @@
 
 
 Draw::Draw() {
-	scale = { 1.0f,1.0f,1.0f };
-	rotation = { 0.0f,0.0f,0.0f };
-	position = { 0.0f,0.0f,0.0f };
+	//scale = { 1.0f,1.0f,1.0f };
+	//rotation = { 0.0f,0.0f,0.0f };
+	//position = { 0.0f,0.0f,0.0f };
 
-	scale1 = { 1.0f,1.0f,1.0f };
-	rotation1 = { 0.0f,XM_PI/4.0f,0.0f };
-	position1 = { -20.0f,0.0f,0.0f };
+	//scale1 = { 1.0f,1.0f,1.0f };
+	//rotation1 = { 0.0f,XM_PI/4.0f,0.0f };
+	//position1 = { -20.0f,0.0f,0.0f };
 }
 
 Draw::~Draw() {}
@@ -82,7 +82,7 @@ void Draw::Ini(IniDX* iniDX) {
 	target = { 0, 0, 0 };
 	up = { 0, 1, 0 };
 
-	matview = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 
 	/*matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	matRot = XMMatrixIdentity();
@@ -117,7 +117,7 @@ void Draw::Ini(IniDX* iniDX) {
 	matWorld1 *= matTrans1;*/
 
 	for (size_t i = 0; i < _countof(object3ds); i++) {
-		object3ds[i].UpdateObject3d(matview, matProjection);
+		object3ds[i].UpdateObject3d();
 	}
 
 
@@ -365,7 +365,7 @@ void Draw::Ini(IniDX* iniDX) {
 	assert(SUCCEEDED(iniDX->result));
 
 	//値を書き込むと自動的に転送される
-	constMapMaterial->color = XMFLOAT4(1, 0, 0, 1);	//RGBAで半透明の赤
+	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1);	//RGBAで半透明の赤
 	//////////////////
 	//テクスチャの初期化
 	//////////////////
@@ -511,8 +511,8 @@ void Draw::Ini(IniDX* iniDX) {
 	);
 
 	//定数バッファに転送
-	//constMapTransform0->mat = matWorld * matview * matProjection;
-	//constMapTransform1->mat = matWorld1 * matview * matProjection;
+	//constMapTransform0->mat = matWorld * matView * matProjection;
+	//constMapTransform1->mat = matWorld1 * matView * matProjection;
 
 
 	//ルートパラメータ0番の設定
@@ -584,26 +584,29 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//配列内の全オブジェクトに対して
+	//配列内の全オブジェクトに対して////////////////////////////////////////////////////////////////////////////
 	for (int i = 0; i < _countof(object3ds); i++) {
 		//初期化
 		object3ds[i].InitializeObject3d(iniDX->device);
 
+		object3ds[0].worldTransform.scale = { 1.0f,1.0f,1.0f };
+		object3ds[0].worldTransform.rotation = { 0.0f,0.0f,0.0f};
+		object3ds[0].worldTransform.trans = { 0.0f,0.0f,0.0f };
 		//ここから↓は親子構造のサンプル
 		//先頭以外なら
-		if (i > 0) {
+		//if (i > 0) {
 			//1つ前のオブジェクトを親オブジェクトとする
-			object3ds[i].worldTransform.parent = &object3ds[i - 1].worldTransform;
-			//親オブジェクトの9割りの大きさ
-			object3ds[i].worldTransform.scale = { 0.9f,0.9f,0.9f };
+			//object3ds[i].worldTransform.parent = &object3ds[i - 1].worldTransform;
+			//親オブジェクトの9割の大きさ
+			//object3ds[i].worldTransform.scale = { 0.9f,0.9f,0.9f };
 			//親オブジェクトに対してZ軸まわりに30度回転
-			object3ds[i].worldTransform.rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
+			//object3ds[i].worldTransform.rotation = { 0.0f,0.0f,/*XMConvertToRadians(30.0f) */ 0.0f};
 
 			//親オブジェクトに対してZ方向-8.0ずらす
-			object3ds[i].worldTransform.trans = { 0.0f,0.0f,-8.0f };
-		}
+			//object3ds[i].worldTransform.trans = { 0.0f,0.0f,-8.0f };
+		//}
 	}
-
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//iniDX->result = iniDX->device->CreateCommittedResource(
 	//	&cbHeapProp,
 	//	D3D12_HEAP_FLAG_NONE,

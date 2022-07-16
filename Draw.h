@@ -44,11 +44,11 @@ public:
 	};
 
 
-	ID3D12Resource* constBuffTransform0 = nullptr;
-	ConstBufferDataTransform* constMapTransform0 = nullptr;
+	//ID3D12Resource* constBuffTransform0 = nullptr;
+	//ConstBufferDataTransform* constMapTransform0 = nullptr;
 
-	ID3D12Resource* constBuffTransform1 = nullptr;
-	ConstBufferDataTransform* constMapTransform1 = nullptr;
+	//ID3D12Resource* constBuffTransform1 = nullptr;
+	//ConstBufferDataTransform* constMapTransform1 = nullptr;
 
 	//色
 	ConstBufferDataMaterial* constMapMaterial;
@@ -65,7 +65,7 @@ public:
 
 	XMMATRIX matWorld;
 	XMMATRIX matWorld1;
-	XMMATRIX matview;
+	XMMATRIX matView;
 	XMMATRIX matProjection;
 
 	//スケーリング0

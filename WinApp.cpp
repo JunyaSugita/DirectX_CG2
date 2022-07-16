@@ -66,11 +66,11 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		graphics->Process(iniDX, draw);
 		input->GetKey(iniDX);
 
-		a += 0.01f;
-		if (a >= 1.0f) {
-			a = 1.0f;
-		}
-		draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,1);
+		//a += 0.01f;
+		//if (a >= 1.0f) {
+		//	a = 1.0f;
+		//}
+		//draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,1);
 
 		if (input->key[DIK_D] || input->key[DIK_A]) {
 			if (input->key[DIK_D]) {
@@ -82,33 +82,53 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 
 			draw->eye.x = -100 * sinf(angle);
 			draw->eye.z = -100 * cosf(angle);
-			draw->matview = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
+			draw->matView = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
 		}
 		draw->position = { 0.0f,0.0f,0.0f };
 
-		if (input->key[DIK_UP] || input->key[DIK_DOWN] || input->key[DIK_RIGHT] || input->key[DIK_LEFT]) {
-			if (input->key[DIK_UP]) {
-				draw->position.y += 1.0f;
-			}
-			else if (input->key[DIK_DOWN]) {
-				draw->position.y -= 1.0f;
-			}
-			if (input->key[DIK_RIGHT]) {
-				draw->position.x += 1.0f;
-			}
-			else if (input->key[DIK_LEFT]) {
-				draw->position.x -= 1.0f;
-			}
-		}
+		//if (input->key[DIK_UP] || input->key[DIK_DOWN] || input->key[DIK_RIGHT] || input->key[DIK_LEFT]) {
+		//	if (input->key[DIK_UP]) {
+		//		draw->position.y += 1.0f;
+		//	}
+		//	else if (input->key[DIK_DOWN]) {
+		//		draw->position.y -= 1.0f;
+		//	}
+		//	if (input->key[DIK_RIGHT]) {
+		//		draw->position.x += 1.0f;
+		//	}
+		//	else if (input->key[DIK_LEFT]) {
+		//		draw->position.x -= 1.0f;
+		//	}
+		//}
 
 		XMMATRIX matTrans;
 		matTrans = XMMatrixTranslation(draw->position.x, draw->position.y, draw->position.z);
 		draw->matWorld *= matTrans;
 
 		//定数バッファに転送
-		//draw->constMapTransform0->mat = draw->matWorld * draw->matview * draw->matProjection;
-		//draw->constMapTransform1->mat = draw->matWorld1 * draw->matview * draw->matProjection;
+		//draw->constMapTransform0->mat = draw->matWorld * draw->matView * draw->matProjection;
+		//draw->constMapTransform1->mat = draw->matWorld1 * draw->matView * draw->matProjection;
 
+		for (int i = 0; i < _countof(draw->object3ds); i++) {
+			draw->object3ds[i].UpdateObject3d();
+			XMMATRIX XMMatWorld;
+			XMMatWorld =
+			{
+				draw->object3ds[i].worldTransform.matWorld.m[0][0],draw->object3ds[i].worldTransform.matWorld.m[0][1],draw->object3ds[i].worldTransform.matWorld.m[0][2],draw->object3ds[i].worldTransform.matWorld.m[0][3],
+				draw->object3ds[i].worldTransform.matWorld.m[1][0],draw->object3ds[i].worldTransform.matWorld.m[1][1],draw->object3ds[i].worldTransform.matWorld.m[1][2],draw->object3ds[i].worldTransform.matWorld.m[1][3],
+				draw->object3ds[i].worldTransform.matWorld.m[2][0],draw->object3ds[i].worldTransform.matWorld.m[2][1],draw->object3ds[i].worldTransform.matWorld.m[2][2],draw->object3ds[i].worldTransform.matWorld.m[2][3],
+				draw->object3ds[i].worldTransform.matWorld.m[3][0],draw->object3ds[i].worldTransform.matWorld.m[3][1],draw->object3ds[i].worldTransform.matWorld.m[3][2],draw->object3ds[i].worldTransform.matWorld.m[3][3],
+			};
+
+			draw->object3ds[i].constMapTransform->mat = XMMatWorld * draw->matView * draw->matProjection;
+		}
+
+		if (input->key[DIK_UP] || input->key[DIK_DOWN] || input->key[DIK_RIGHT] || input->key[DIK_LEFT]) {
+			if (input->key[DIK_UP]) { draw->object3ds[0].worldTransform.trans.y += 1.0f; }
+			if (input->key[DIK_DOWN]) { draw->object3ds[0].worldTransform.trans.y -= 1.0f; }
+			if (input->key[DIK_RIGHT]) { draw->object3ds[0].worldTransform.trans.x += 1.0f; }
+			if (input->key[DIK_LEFT]) { draw->object3ds[0].worldTransform.trans.x -= 1.0f; }
+		}
 
 		//×ボタンで終了
 		if (msg.message == WM_QUIT) {
