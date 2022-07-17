@@ -101,9 +101,9 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		//	}
 		//}
 
-		XMMATRIX matTrans;
-		matTrans = XMMatrixTranslation(draw->position.x, draw->position.y, draw->position.z);
-		draw->matWorld *= matTrans;
+		//XMMATRIX matTrans;
+		//matTrans = XMMatrixTranslation(draw->position.x, draw->position.y, draw->position.z);
+		//draw->matWorld *= matTrans;
 
 		//定数バッファに転送
 		//draw->constMapTransform0->mat = draw->matWorld * draw->matView * draw->matProjection;
