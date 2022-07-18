@@ -115,7 +115,7 @@ public:
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
 	//”z—ñ
-	static const size_t kObjectCount = 50;
+	static const size_t kObjectCount = 9;
 
 	Object3d object3ds[kObjectCount];
 };

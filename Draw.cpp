@@ -576,6 +576,39 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 		object3ds[0].worldTransform.scale = { 1.0f,1.0f,1.0f };
 		object3ds[0].worldTransform.rotation = { 0.0f,0.0f,0.0f};
 		object3ds[0].worldTransform.trans = { 0.0f,0.0f,0.0f };
+
+		object3ds[1].worldTransform.scale = { 1.0f,2.0f,1.0f };
+		object3ds[1].worldTransform.rotation = { 0.0f,0.0f,0.0f };
+		object3ds[1].worldTransform.trans = { 50.0f,50.0f,10.0f };
+
+		object3ds[2].worldTransform.scale = { 2.0f,1.0f,1.0f };
+		object3ds[2].worldTransform.rotation = { 0.0f,0.0f,0.0f };
+		object3ds[2].worldTransform.trans = { -50.0f,50.0f,20.0f };
+
+		object3ds[3].worldTransform.scale = { 1.0f,3.0f,1.0f };
+		object3ds[3].worldTransform.rotation = { 0.0f,0.0f,0.0f };
+		object3ds[3].worldTransform.trans = { -50.0f,-50.0f,-20.0f };
+
+		object3ds[4].worldTransform.scale = { 4.0f,4.0f,1.0f };
+		object3ds[4].worldTransform.rotation = { 0.0f,0.0f,0.0f };
+		object3ds[4].worldTransform.trans = { 50.0f,-50.0f,-10.0f };
+
+		object3ds[5].worldTransform.scale = { 2.0f,3.0f,1.0f };
+		object3ds[5].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		object3ds[5].worldTransform.trans = { 0.0f,50.0f,-30.0f };
+
+		object3ds[6].worldTransform.scale = { 3.0f,2.0f,1.0f };
+		object3ds[6].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		object3ds[6].worldTransform.trans = { 0.0f,-50.0f,10.0f };
+
+		object3ds[7].worldTransform.scale = { 2.0f,2.0f,1.0f };
+		object3ds[7].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		object3ds[7].worldTransform.trans = { -50.0f,0.0f,20.0f };
+
+		object3ds[8].worldTransform.scale = { 4.0f,4.0f,1.0f };
+		object3ds[8].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		object3ds[8].worldTransform.trans = { 50.0f,0.0f,-10.0f };
+
 		//ここから↓は親子構造のサンプル
 		//先頭以外なら
 		//if (i > 0) {

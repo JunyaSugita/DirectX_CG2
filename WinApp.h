@@ -19,7 +19,12 @@ public:
 	HWND hwnd;
 	MSG msg{};
 
-	float a = 0.0f;
+	int changeColor = 0;
+	float r = 0.0f;
+	float g = 0.0f;
+	float b = 0.0f;
+	float a = 1.0f;
+
 	float angle = 0.0f;
 };
 

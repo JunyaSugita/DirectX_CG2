@@ -66,11 +66,57 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 		graphics->Process(iniDX, draw);
 		input->GetKey(iniDX);
 
-		//a += 0.01f;
-		//if (a >= 1.0f) {
-		//	a = 1.0f;
-		//}
-		//draw->constMapMaterial->color = XMFLOAT4(1-a,a,0,1);
+		switch (changeColor)
+		{
+		case 0:
+			r += 0.01f;
+			if (r >= 1.0f) {
+				changeColor++;
+			}
+			break;
+		case 1:
+			b -= 0.01f;
+			if (b <= 0.0f) {
+				changeColor++;
+			}
+			break;
+		case 2:
+			g += 0.01f;
+			if (g >= 1.0f) {
+				changeColor++;
+			}
+			break;
+		case 3:
+			r -= 0.01f;
+			if (r <= 0.0f) {
+				changeColor++;
+			}
+			break;
+		case 4:
+			b += 0.01f;
+			if (b >= 1.0f) {
+				changeColor++;
+			}
+			break;
+		case 5:
+			g -= 0.01f;
+			if (g <= 0.0f) {
+				changeColor = 0;
+			}
+			break;
+		default:
+			break;
+		}
+
+		if (input->key[DIK_SPACE]) {
+			a = 0.5f;
+		}
+		else {
+			a = 1.0f;
+		}
+		
+
+		draw->constMapMaterial->color = XMFLOAT4(r,g,b,a);
 
 		if (input->key[DIK_D] || input->key[DIK_A]) {
 			if (input->key[DIK_D]) {
@@ -85,29 +131,6 @@ void WinApp::MessageLoop(IniDX *iniDX, Draw* draw, Input* input, Graphics* graph
 			draw->matView = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
 		}
 		draw->position = { 0.0f,0.0f,0.0f };
-
-		//if (input->key[DIK_UP] || input->key[DIK_DOWN] || input->key[DIK_RIGHT] || input->key[DIK_LEFT]) {
-		//	if (input->key[DIK_UP]) {
-		//		draw->position.y += 1.0f;
-		//	}
-		//	else if (input->key[DIK_DOWN]) {
-		//		draw->position.y -= 1.0f;
-		//	}
-		//	if (input->key[DIK_RIGHT]) {
-		//		draw->position.x += 1.0f;
-		//	}
-		//	else if (input->key[DIK_LEFT]) {
-		//		draw->position.x -= 1.0f;
-		//	}
-		//}
-
-		//XMMATRIX matTrans;
-		//matTrans = XMMatrixTranslation(draw->position.x, draw->position.y, draw->position.z);
-		//draw->matWorld *= matTrans;
-
-		//定数バッファに転送
-		//draw->constMapTransform0->mat = draw->matWorld * draw->matView * draw->matProjection;
-		//draw->constMapTransform1->mat = draw->matWorld1 * draw->matView * draw->matProjection;
 
 		for (int i = 0; i < _countof(draw->object3ds); i++) {
 			draw->object3ds[i].UpdateObject3d();
