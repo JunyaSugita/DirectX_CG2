@@ -52,10 +52,7 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	iniDX->commandList->RSSetScissorRects(1, &scissorRect);
 
 	// パイプラインステートとルートシグネチャの設定コマンド
-	if (circle == true) {
-		iniDX->commandList->SetPipelineState(draw->pipelineState[2]);
-	}
-	else if (solid == false) {
+	if (solid == false) {
 		iniDX->commandList->SetPipelineState(draw->pipelineState[0]);
 	}
 	else {

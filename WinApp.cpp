@@ -132,18 +132,6 @@ void WinApp::MessageLoop(IniDX* iniDX, Draw* draw, Input* input, Graphics* graph
 			draw->eye.z = -100 * cosf(angle);
 			draw->matView = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
 		}
-		if (input->key[DIK_W] || input->key[DIK_S]) {
-			if (input->key[DIK_W]) {
-				angle += XMConvertToRadians(1.0f);
-			}
-			else if (input->key[DIK_S]) {
-				angle -= XMConvertToRadians(1.0f);
-			}
-
-			draw->eye.x = -100 * sinf(angle);
-			draw->eye.z = -100 * cosf(angle);
-			draw->matView = XMMatrixLookAtLH(XMLoadFloat3(&draw->eye), XMLoadFloat3(&draw->target), XMLoadFloat3(&draw->up));
-		}
 		draw->position = { 0.0f,0.0f,0.0f };
 
 
