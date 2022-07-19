@@ -1,6 +1,9 @@
 #include "Graphics.h"
 
 Graphics::Graphics() {
+	triangle = true;
+	solid = false;
+	circle = false;
 }
 
 Graphics::~Graphics() {
@@ -49,11 +52,27 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	iniDX->commandList->RSSetScissorRects(1, &scissorRect);
 
 	// パイプラインステートとルートシグネチャの設定コマンド
-	iniDX->commandList->SetPipelineState(draw->pipelineState);
+	if (circle == true) {
+		iniDX->commandList->SetPipelineState(draw->pipelineState[2]);
+	}
+	else if (solid == false) {
+		iniDX->commandList->SetPipelineState(draw->pipelineState[0]);
+	}
+	else {
+		iniDX->commandList->SetPipelineState(draw->pipelineState[1]);
+	}
+
+	
+
 	iniDX->commandList->SetGraphicsRootSignature(draw->rootSignature);
 
 	// プリミティブ形状の設定コマンド///////////////////////////////////////////////////////
-	iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);// 
+	if (triangle == true) {
+		iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);// 
+	}
+	else {
+		iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);// 
+	}
 	//////////////////////////////////////////////////////////////////////////////////
 	// 頂点バッファビューの設定コマンド
 	iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView);

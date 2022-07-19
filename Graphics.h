@@ -11,4 +11,7 @@ public:
 	void Process(IniDX* iniDX, Draw* draw);
 public:
 	Object3d object3d;
+	bool triangle;
+	bool solid;
+	bool circle;
 };

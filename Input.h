@@ -24,7 +24,7 @@ public:
 	IDirectInputDevice8* keyboard;
 	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
 	BYTE key[256] = {};
-
+	BYTE oldKey[256] = {};
 };
 
 

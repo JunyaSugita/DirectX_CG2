@@ -26,7 +26,7 @@ public:
 	std::vector<Vertex> vertices;
 	std::vector<uint16_t> indices;
 
-	ID3D12PipelineState* pipelineState;
+	ID3D12PipelineState* pipelineState[3];
 	// ルートシグネチャ
 	ID3D12RootSignature* rootSignature;
 	// 頂点バッファビューの作成
@@ -115,7 +115,7 @@ public:
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
 	//配列
-	static const size_t kObjectCount = 9;
+	static const size_t kObjectCount = 5;
 
 	Object3d object3ds[kObjectCount];
 };

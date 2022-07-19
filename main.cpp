@@ -4,7 +4,7 @@
 #include "IniDX.h"
 #include "Draw.h"
 
-WinApp* winApp = new WinApp;
+WinApp* winApp = new WinApp();
 Input* input = new Input;
 Graphics* graphics = new Graphics;
 IniDX* iniDX = new IniDX;

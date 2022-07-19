@@ -30,13 +30,8 @@ void Input::Ini(WNDCLASSEX w, HRESULT result, HWND hwnd) {
 
 void Input::GetKey(IniDX* iniDX) {
 	keyboard->Acquire();
+	for (int i = 0; i < 256; i++) {
+		oldKey[i] = key[i];
+	}
 	iniDX->result = keyboard->GetDeviceState(sizeof(key), key);
-
-	float color;
-	if (key[DIK_SPACE]) {
-		color = 0.9f;
-	}
-	else {
-		color = 0.1f;
-	}
 }

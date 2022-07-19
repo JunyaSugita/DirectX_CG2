@@ -19,46 +19,106 @@ void Draw::Ini(IniDX* iniDX) {
 	//頂点データ
 	vertices = std::vector<Vertex>({
 		//前
-		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
-		{ { -5.0f, 5.0f,-5.0f},{},{0.0f,0.0f} },		//左上
-		{ {  5.0f,-5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
-		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,0.0f} },		//右上
+		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下0
+		{ { -5.0f, 5.0f,-5.0f},{},{0.0f,0.0f} },		//左上1
+		{ {  5.0f,-5.0f,-5.0f},{},{1.0f,1.0f} },		//右下2
+		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,0.0f} },		//右上3
 
 		//後
-		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,1.0f} },		//左下
-		{ { -5.0f, 5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
-		{ {  5.0f,-5.0f, 5.0f},{},{1.0f,1.0f} },		//右下
-		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,1.0f} },		//左下4
+		{ { -5.0f, 5.0f, 5.0f},{},{0.0f,0.0f} },		//左上5
+		{ {  5.0f,-5.0f, 5.0f},{},{1.0f,1.0f} },		//右下6
+		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上7
 
 		//左
-		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
-		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
-		{ { -5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
-		{ { -5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下8
+		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上9
+		{ { -5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下10
+		{ { -5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上11
 
 		//右
-		{ {  5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
-		{ {  5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
-		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
-		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+		{ {  5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下12
+		{ {  5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上13
+		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下14
+		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上15
 
 		//下
-		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
-		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
-		{ {  5.0f,-5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
-		{ {  5.0f,-5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+		{ { -5.0f,-5.0f,-5.0f},{},{0.0f,1.0f} },		//左下16
+		{ { -5.0f,-5.0f, 5.0f},{},{0.0f,0.0f} },		//左上17
+		{ {  5.0f,-5.0f,-5.0f},{},{1.0f,1.0f} },		//右下18
+		{ {  5.0f,-5.0f, 5.0f},{},{1.0f,0.0f} },		//右上19
 
 		//上
-		{ { -5.0f, 5.0f,-5.0f},{},{0.0f,1.0f} },		//左下
-		{ { -5.0f, 5.0f, 5.0f},{},{0.0f,0.0f} },		//左上
-		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下
-		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上
+		{ { -5.0f, 5.0f,-5.0f},{},{0.0f,1.0f} },		//左下20
+		{ { -5.0f, 5.0f, 5.0f},{},{0.0f,0.0f} },		//左上21
+		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下22
+		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上23
+
+		//円のデータ
+		{ {  0.0f,  0.0f, -10.0f},{},{1.0f,1.0f}},		//24
+		{ {  0.0f, 12.0f, -10.0f},{},{1.0f,1.0f}},		//25
+		{ {  sinf(XMConvertToRadians( 18.0f)) * 12.0f, cosf(XMConvertToRadians( 18.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//26
+		{ {  sinf(XMConvertToRadians( 36.0f)) * 12.0f, cosf(XMConvertToRadians( 36.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//27
+		{ {  sinf(XMConvertToRadians( 54.0f)) * 12.0f, cosf(XMConvertToRadians( 54.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//28
+		{ {  sinf(XMConvertToRadians( 72.0f)) * 12.0f, cosf(XMConvertToRadians( 72.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//29
+		{ {  sinf(XMConvertToRadians( 90.0f)) * 12.0f, cosf(XMConvertToRadians( 90.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//30
+		{ {  sinf(XMConvertToRadians(108.0f)) * 12.0f, cosf(XMConvertToRadians(108.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//31
+		{ {  sinf(XMConvertToRadians(126.0f)) * 12.0f, cosf(XMConvertToRadians(126.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//32
+		{ {  sinf(XMConvertToRadians(144.0f)) * 12.0f, cosf(XMConvertToRadians(144.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//33
+		{ {  sinf(XMConvertToRadians(162.0f)) * 12.0f, cosf(XMConvertToRadians(162.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//34
+		{ {  sinf(XMConvertToRadians(180.0f)) * 12.0f, cosf(XMConvertToRadians(180.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//35
+		{ {  sinf(XMConvertToRadians(198.0f)) * 12.0f, cosf(XMConvertToRadians(198.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//36
+		{ {  sinf(XMConvertToRadians(216.0f)) * 12.0f, cosf(XMConvertToRadians(216.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//37
+		{ {  sinf(XMConvertToRadians(234.0f)) * 12.0f, cosf(XMConvertToRadians(234.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//38
+		{ {  sinf(XMConvertToRadians(252.0f)) * 12.0f, cosf(XMConvertToRadians(252.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//39
+		{ {  sinf(XMConvertToRadians(270.0f)) * 12.0f, cosf(XMConvertToRadians(270.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//40
+		{ {  sinf(XMConvertToRadians(288.0f)) * 12.0f, cosf(XMConvertToRadians(288.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//41
+		{ {  sinf(XMConvertToRadians(306.0f)) * 12.0f, cosf(XMConvertToRadians(306.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//42
+		{ {  sinf(XMConvertToRadians(324.0f)) * 12.0f, cosf(XMConvertToRadians(324.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//43
+		{ {  sinf(XMConvertToRadians(342.0f)) * 12.0f, cosf(XMConvertToRadians(342.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//44
 		});
 
-	
+
 	indices = std::vector<uint16_t>({
 		//前
 		0,1,2,
+		1,2,3,
+		//後
+		5,4,6,
+		7,5,6,
+		//左
+		8,9,10,
+		9,10,11,
+		//右
+		13,12,14,
+		15,13,14,
+		//下
+		17,16,18,
+		19,17,18,
+		//上
+		20,21,22,
+		21,22,23,
+
+		24,25,26,
+		24,26,27,
+		24,27,28,
+		24,28,29,
+		24,29,30,
+		24,30,31,
+		24,31,32,
+		24,32,33,
+		24,33,34,
+		24,34,35,
+		24,35,36,
+		24,36,37,
+		24,37,38,
+		24,38,39,
+		24,39,40,
+		24,40,41,
+		24,41,42,
+		24,42,43,
+		24,43,44,
+		24,44,25,
 		});
 
 	//ビュー変換行列
@@ -376,30 +436,30 @@ void Draw::Ini(IniDX* iniDX) {
 	//読み込んだディフューズテクスチャをSRGBとして扱う
 	metadata.format = MakeSRGB(metadata.format);
 
-	////横方向ピクセル数
-	//const size_t textureWidth = 256;
-	////縦方向ピクセル数
-	//const size_t textureHeight = 256;
-	////配列の要素数
-	//const size_t imageDataCount = textureWidth * textureHeight;
-	////画像イメージデータ配列
-	//XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
+	//横方向ピクセル数
+	const size_t textureWidth = 256;
+	//縦方向ピクセル数
+	const size_t textureHeight = 256;
+	//配列の要素数
+	const size_t imageDataCount = textureWidth * textureHeight;
+	//画像イメージデータ配列
+	XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
 
-	////全ピクセルの色を初期化
-	//for (size_t i = 0; i < imageDataCount; i++) {
-	//	if (i % 20 < 10) {
-	//		imageData[i].x = 0.0f;	//R
-	//		imageData[i].y = 1.0f;	//G
-	//		imageData[i].z = 0.0f;	//B
-	//		imageData[i].w = 1.0f;	//A
-	//	}
-	//	else {
-	//		imageData[i].x = 0.0f;	//R
-	//		imageData[i].y = 1.0f;	//G
-	//		imageData[i].z = 0.0f;	//B
-	//		imageData[i].w = 0.0f;	//A
-	//	}
-	//}
+	//全ピクセルの色を初期化
+	for (size_t i = 0; i < imageDataCount; i++) {
+		if (i % 20 < 10) {
+			imageData[i].x = 0.0f;	//R
+			imageData[i].y = 1.0f;	//G
+			imageData[i].z = 0.0f;	//B
+			imageData[i].w = 1.0f;	//A
+		}
+		else {
+			imageData[i].x = 0.0f;	//R
+			imageData[i].y = 1.0f;	//G
+			imageData[i].z = 0.0f;	//B
+			imageData[i].w = 0.0f;	//A
+		}
+	}
 
 	//ヒープ設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
@@ -547,11 +607,23 @@ void Draw::Ini(IniDX* iniDX) {
 	pipelineDesc.pRootSignature = rootSignature;
 
 	// パイプランステートの生成
-	pipelineState = nullptr;
-	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	pipelineState[0] = nullptr;
+	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState[0]));
 	assert(SUCCEEDED(iniDX->result));
 
 
+	// パイプランステートの生成2
+	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
+	pipelineState[1] = nullptr;
+	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState[1]));
+	assert(SUCCEEDED(iniDX->result));
+
+	// パイプランステートの生成3
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	pipelineState[2] = nullptr;
+	iniDX->result = iniDX->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState[2]));
+	assert(SUCCEEDED(iniDX->result));
 }
 
 void Draw::ConstBaffer(IniDX* iniDX) {
@@ -574,7 +646,7 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 		object3ds[i].InitializeObject3d(iniDX->device);
 
 		object3ds[0].worldTransform.scale = { 1.0f,1.0f,1.0f };
-		object3ds[0].worldTransform.rotation = { 0.0f,0.0f,0.0f};
+		object3ds[0].worldTransform.rotation = { 0.0f,0.0f,0.0f };
 		object3ds[0].worldTransform.trans = { 0.0f,0.0f,0.0f };
 
 		object3ds[1].worldTransform.scale = { 1.0f,2.0f,1.0f };
@@ -593,21 +665,21 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 		object3ds[4].worldTransform.rotation = { 0.0f,0.0f,0.0f };
 		object3ds[4].worldTransform.trans = { 50.0f,-50.0f,-10.0f };
 
-		object3ds[5].worldTransform.scale = { 2.0f,3.0f,1.0f };
-		object3ds[5].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		object3ds[5].worldTransform.trans = { 0.0f,50.0f,-30.0f };
+		//object3ds[5].worldTransform.scale = { 2.0f,3.0f,1.0f };
+		//object3ds[5].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		//object3ds[5].worldTransform.trans = { 0.0f,50.0f,-30.0f };
 
-		object3ds[6].worldTransform.scale = { 3.0f,2.0f,1.0f };
-		object3ds[6].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		object3ds[6].worldTransform.trans = { 0.0f,-50.0f,10.0f };
+		//object3ds[6].worldTransform.scale = { 3.0f,2.0f,1.0f };
+		//object3ds[6].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		//object3ds[6].worldTransform.trans = { 0.0f,-50.0f,10.0f };
 
-		object3ds[7].worldTransform.scale = { 2.0f,2.0f,1.0f };
-		object3ds[7].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		object3ds[7].worldTransform.trans = { -50.0f,0.0f,20.0f };
+		//object3ds[7].worldTransform.scale = { 2.0f,2.0f,1.0f };
+		//object3ds[7].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		//object3ds[7].worldTransform.trans = { -50.0f,0.0f,20.0f };
 
-		object3ds[8].worldTransform.scale = { 4.0f,4.0f,1.0f };
-		object3ds[8].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		object3ds[8].worldTransform.trans = { 50.0f,0.0f,-10.0f };
+		//object3ds[8].worldTransform.scale = { 4.0f,4.0f,1.0f };
+		//object3ds[8].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
+		//object3ds[8].worldTransform.trans = { 50.0f,0.0f,-10.0f };
 
 		//ここから↓は親子構造のサンプル
 		//先頭以外なら
@@ -648,7 +720,7 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 	//定数バッファのマッピング
 	//iniDX->result = constBuffTransform1->Map(0, nullptr, (void**)&constMapTransform1);
 	//assert(SUCCEEDED(iniDX->result));
-	
+
 
 	//リソース設定
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
