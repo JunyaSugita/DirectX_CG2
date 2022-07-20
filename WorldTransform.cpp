@@ -42,6 +42,7 @@ void WorldTransform::SetMatRot(Matrix4& matRot, const Vector3& rot, const char w
 		matRot.m[0][1] = sin(rot.z);
 		matRot.m[1][0] = -sin(rot.z);
 		matRot.m[1][1] = cos(rot.z);
+
 	}
 
 	if (way == 'x') {
@@ -122,6 +123,6 @@ void WorldTransform::SetWorldMat() {
 	matWorld *= matScale * matRot * matTrans;
 
 	if (parent != nullptr) {
-		matWorld *= parent->matWorld;
+		//matWorld *= parent->matWorld;
 	}
 }

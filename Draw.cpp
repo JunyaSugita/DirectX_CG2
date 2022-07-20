@@ -594,17 +594,17 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 		object3ds[0].worldTransform.trans = { 0.0f,0.0f,0.0f };
 		//ここから↓は親子構造のサンプル
 		//先頭以外なら
-		//if (i > 0) {
+		if (i > 0) {
 			//1つ前のオブジェクトを親オブジェクトとする
-			//object3ds[i].worldTransform.parent = &object3ds[i - 1].worldTransform;
+			object3ds[i].worldTransform.parent = &object3ds[i - 1].worldTransform;
 			//親オブジェクトの9割の大きさ
-			//object3ds[i].worldTransform.scale = { 0.9f,0.9f,0.9f };
+			object3ds[i].worldTransform.scale = { 0.9f,0.9f,0.9f };
 			//親オブジェクトに対してZ軸まわりに30度回転
-			//object3ds[i].worldTransform.rotation = { 0.0f,0.0f,/*XMConvertToRadians(30.0f) */ 0.0f};
+			object3ds[i].worldTransform.rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f)};
 
 			//親オブジェクトに対してZ方向-8.0ずらす
-			//object3ds[i].worldTransform.trans = { 0.0f,0.0f,-8.0f };
-		//}
+			object3ds[i].worldTransform.trans = { 0.0f,0.0f,-8.0f };
+		}
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//iniDX->result = iniDX->device->CreateCommittedResource(

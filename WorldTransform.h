@@ -23,7 +23,13 @@ public:
 	Vector3 trans = { 0,0,0 };
 
 	//ワールド変換行列
-	Matrix4 matWorld;
+	Matrix4 matWorld = 
+	{
+		1,0,0,0,
+		0,1,0,0,
+		0,0,1,0,
+		0,0,0,1,
+	};
 
 	//親のオブジェクトへのポインタ
 	WorldTransform* parent = nullptr;
