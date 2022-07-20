@@ -29,14 +29,16 @@ Matrix4::Matrix4(float m00, float m01, float m02, float m03, float m10, float m1
 
 Matrix4& Matrix4::operator*=(const Matrix4& m2)
 {
+    Matrix4 ans;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
-                m[i][j] += m[i][k] * m2.m[k][j];
+                ans.m[i][j] += m[i][k] * m2.m[k][j];
             }
         }
     }
 
+    *this = ans;
     return *this;
 }
 
