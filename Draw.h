@@ -24,19 +24,25 @@ public:
 
 public:
 	std::vector<Vertex> vertices;
+	std::vector<Vertex> vertices2;
 	std::vector<uint16_t> indices;
+	std::vector<uint16_t> indices2;
 
 	ID3D12PipelineState* pipelineState[3];
 	// ルートシグネチャ
 	ID3D12RootSignature* rootSignature;
 	// 頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
+	// 頂点バッファビューの作成
+	D3D12_VERTEX_BUFFER_VIEW vbView2{};
 	//ルートパラメータの設定
 	D3D12_ROOT_PARAMETER rootParams[3] = {};
 	//リソース設定
 	ID3D12Resource* constBuffMaterial = nullptr;
 	//インデックスバッファビューの作成
 	D3D12_INDEX_BUFFER_VIEW ibView{};
+	//インデックスバッファビューの作成
+	D3D12_INDEX_BUFFER_VIEW ibView2{};
 
 	//定数バッファ用データ構造体(マテリアル)
 	struct ConstBufferDataMaterial {

@@ -4,6 +4,7 @@ Graphics::Graphics() {
 	triangle = true;
 	solid = false;
 	circle = false;
+	model3d = false;
 }
 
 Graphics::~Graphics() {
@@ -59,20 +60,21 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 		iniDX->commandList->SetPipelineState(draw->pipelineState[1]);
 	}
 
-	
+
 
 	iniDX->commandList->SetGraphicsRootSignature(draw->rootSignature);
 
 	// プリミティブ形状の設定コマンド///////////////////////////////////////////////////////
-	if (triangle == true) {
-		iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);// 
-	}
-	else {
-		iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);// 
-	}
+	iniDX->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);// 
+
 	//////////////////////////////////////////////////////////////////////////////////
 	// 頂点バッファビューの設定コマンド
-	iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView);
+	if (circle == false) {
+		iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView);
+	}
+	else {
+		iniDX->commandList->IASetVertexBuffers(0, 1, &draw->vbView2);
+	}
 
 	//定数バッファビュー(CBV)の設定コマンド
 	iniDX->commandList->SetGraphicsRootConstantBufferView(0, draw->constBuffMaterial->GetGPUVirtualAddress());
@@ -86,15 +88,38 @@ void Graphics::Process(IniDX* iniDX, Draw* draw) {
 	//iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform0->GetGPUVirtualAddress());
 
 	//インデックスバッファビューの設定コマンド
-	iniDX->commandList->IASetIndexBuffer(&draw->ibView);
+	if (circle == false) {
+		iniDX->commandList->IASetIndexBuffer(&draw->ibView);
+	}
+	else {
+		iniDX->commandList->IASetIndexBuffer(&draw->ibView2);
+	}
 
 	// 描画コマンド
 	//iniDX->commandList->DrawInstanced(draw->vertices.size(), 1, 0, 0);
 	//iniDX->commandList->DrawIndexedInstanced(draw->indices.size(), 1, 0, 0, 0); // 全ての頂点を使って描画
 
-	for (int i = 0; i < _countof(draw->object3ds); i++) {
-		Draw3dObject(&draw->object3ds[i], iniDX->commandList, draw->vbView, draw->ibView, draw->indices.size());
+	if (model3d == true) {
+		for (int i = 0; i < _countof(draw->object3ds); i++) {
+			Draw3dObject(&draw->object3ds[i], iniDX->commandList, draw->vbView, draw->ibView, draw->indices.size());
+		}
 	}
+	else if (triangle == true) {
+		for (int i = 0; i < _countof(draw->object3ds); i++) {
+			Draw3dObject(&draw->object3ds[i], iniDX->commandList, draw->vbView, draw->ibView, 3);
+		}
+	}
+	else if (circle == true) {
+		for (int i = 0; i < _countof(draw->object3ds); i++) {
+			Draw3dObject(&draw->object3ds[i], iniDX->commandList, draw->vbView2, draw->ibView2, draw->indices2.size());
+		}
+	}
+	else {
+		for (int i = 0; i < _countof(draw->object3ds); i++) {
+			Draw3dObject(&draw->object3ds[i], iniDX->commandList, draw->vbView, draw->ibView, 6);
+		}
+	}
+
 
 	//定数バッファビュー(CBV)の設定コマンド
 	//iniDX->commandList->SetGraphicsRootConstantBufferView(2, draw->constBuffTransform1->GetGPUVirtualAddress());

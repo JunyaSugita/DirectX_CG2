@@ -26,7 +26,6 @@ public:
 	float a = 1.0f;
 
 	float angle = 0.0f;
-	bool isStart;
-	bool model3d;
+	int type = 0;
 };
 

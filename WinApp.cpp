@@ -1,8 +1,6 @@
 #include "WinApp.h"
 
 WinApp::WinApp() {
-	isStart = false;
-	model3d = false;
 }
 
 WinApp::~WinApp() {
@@ -151,121 +149,32 @@ void WinApp::MessageLoop(IniDX* iniDX, Draw* draw, Input* input, Graphics* graph
 			}
 		}
 
-		if ((input->key[DIK_2] && input->oldKey[DIK_2] == 0) || isStart == false) {
-			if (graphics->triangle == true) {
-				graphics->triangle = false;
-				model3d = false;
-				draw->indices = std::vector<uint16_t>(
-					{
-					0,1,2,
-					1,2,3
-					});
-			}
-			else {
-				graphics->triangle = true;
-				draw->indices = std::vector<uint16_t>(
-					{
-					0,1,2,
-					});
-				isStart = true;
+		if ((input->key[DIK_2] && input->oldKey[DIK_2] == 0)) {
+			type++;
+			if (type > 3) {
+				type = 0;
 			}
 		}
 
-		if ((input->key[DIK_3] && input->oldKey[DIK_3] == 0)) {
-			if (model3d == false) {
-				graphics->triangle = false;
-				model3d = true;
-				draw->indices = std::vector<uint16_t>(
-					{
-					//前
-					0,1,2,
-					1,2,3,
-					//後
-					5,4,6,
-					7,5,6,
-					//左
-					8,9,10,
-					9,10,11,
-					//右
-					13,12,14,
-					15,13,14,
-					//下
-					17,16,18,
-					19,17,18,
-					//上
-					20,21,22,
-					21,22,23,
-					}
-				);
-			}
-			else {
-				model3d = false;
-				graphics->triangle = false;
-				draw->indices = std::vector<uint16_t>(
-					{
-					0,1,2,
-					}
-				);
-			}
-		}
-
-		if ((input->key[DIK_4] && input->oldKey[DIK_4] == 0)) {
-			if (graphics->circle == false) {
-				graphics->circle = true;
-				graphics->triangle = true;
-				draw->indices = std::vector<uint16_t>(
-					{
-						//前
-						0,1,2,
-						1,2,3,
-						//後
-						5,4,6,
-						7,5,6,
-						//左
-						8,9,10,
-						9,10,11,
-						//右
-						13,12,14,
-						15,13,14,
-						//下
-						17,16,18,
-						19,17,18,
-						//上
-						20,21,22,
-						21,22,23,
-
-						24,25,26,
-						24,26,27,
-						24,27,28,
-						24,28,29,
-						24,29,30,
-						24,30,31,
-						24,31,32,
-						24,32,33,
-						24,33,34,
-						24,34,35,
-						24,35,36,
-						24,36,37,
-						24,37,38,
-						24,38,39,
-						24,39,40,
-						24,40,41,
-						24,41,42,
-						24,42,43,
-						24,43,44,
-						24,44,25,
-					}
-				);
-			}
-			else {
-				graphics->circle = false;
-				graphics->triangle = false;
-				draw->indices = std::vector<uint16_t>(
-					{
-					0,1,2,
-					}
-				);
-			}
+		graphics->triangle = false;
+		graphics->model3d = false;
+		graphics->circle = false;
+		switch (type)
+		{
+		case 0:
+			graphics->triangle = true;
+			break;
+		case 1:
+			graphics->triangle = false;
+			break;
+		case 2:
+			graphics->model3d = true;
+			break;
+		case 3:
+			graphics->circle = true;
+			break;
+		default:
+			break;
 		}
 
 

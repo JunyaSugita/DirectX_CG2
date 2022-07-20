@@ -54,41 +54,45 @@ void Draw::Ini(IniDX* iniDX) {
 		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下22
 		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上23
 
-		//円のデータ
-		{ {  0.0f,  0.0f, -10.0f},{},{1.0f,1.0f}},		//24
-		{ {  0.0f, 12.0f, -10.0f},{},{1.0f,1.0f}},		//25
-		{ {  sinf(XMConvertToRadians( 18.0f)) * 12.0f, cosf(XMConvertToRadians( 18.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//26
-		{ {  sinf(XMConvertToRadians( 36.0f)) * 12.0f, cosf(XMConvertToRadians( 36.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//27
-		{ {  sinf(XMConvertToRadians( 54.0f)) * 12.0f, cosf(XMConvertToRadians( 54.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//28
-		{ {  sinf(XMConvertToRadians( 72.0f)) * 12.0f, cosf(XMConvertToRadians( 72.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//29
-		{ {  sinf(XMConvertToRadians( 90.0f)) * 12.0f, cosf(XMConvertToRadians( 90.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//30
-		{ {  sinf(XMConvertToRadians(108.0f)) * 12.0f, cosf(XMConvertToRadians(108.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//31
-		{ {  sinf(XMConvertToRadians(126.0f)) * 12.0f, cosf(XMConvertToRadians(126.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//32
-		{ {  sinf(XMConvertToRadians(144.0f)) * 12.0f, cosf(XMConvertToRadians(144.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//33
-		{ {  sinf(XMConvertToRadians(162.0f)) * 12.0f, cosf(XMConvertToRadians(162.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//34
-		{ {  sinf(XMConvertToRadians(180.0f)) * 12.0f, cosf(XMConvertToRadians(180.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//35
-		{ {  sinf(XMConvertToRadians(198.0f)) * 12.0f, cosf(XMConvertToRadians(198.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//36
-		{ {  sinf(XMConvertToRadians(216.0f)) * 12.0f, cosf(XMConvertToRadians(216.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//37
-		{ {  sinf(XMConvertToRadians(234.0f)) * 12.0f, cosf(XMConvertToRadians(234.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//38
-		{ {  sinf(XMConvertToRadians(252.0f)) * 12.0f, cosf(XMConvertToRadians(252.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//39
-		{ {  sinf(XMConvertToRadians(270.0f)) * 12.0f, cosf(XMConvertToRadians(270.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//40
-		{ {  sinf(XMConvertToRadians(288.0f)) * 12.0f, cosf(XMConvertToRadians(288.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//41
-		{ {  sinf(XMConvertToRadians(306.0f)) * 12.0f, cosf(XMConvertToRadians(306.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//42
-		{ {  sinf(XMConvertToRadians(324.0f)) * 12.0f, cosf(XMConvertToRadians(324.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//43
-		{ {  sinf(XMConvertToRadians(342.0f)) * 12.0f, cosf(XMConvertToRadians(342.0f)) * 12.0f, -10.0f},{},{1.0f,1.0f}},	//44
+		
 		});
+	vertices2 = std::vector<Vertex>({
+			//円のデータ
+			{ {  0.0f,  0.0f, 0.0f},{},{1.0f,1.0f}},		//24
+			{ {  sinf(XMConvertToRadians(  0.0f)) * 12.0f, cosf(XMConvertToRadians(  0.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//26
+			{ {  sinf(XMConvertToRadians( 18.0f)) * 12.0f, cosf(XMConvertToRadians( 18.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//26
+			{ {  sinf(XMConvertToRadians( 36.0f)) * 12.0f, cosf(XMConvertToRadians( 36.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//27
+			{ {  sinf(XMConvertToRadians( 54.0f)) * 12.0f, cosf(XMConvertToRadians( 54.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//28
+			{ {  sinf(XMConvertToRadians( 72.0f)) * 12.0f, cosf(XMConvertToRadians( 72.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//29
+			{ {  sinf(XMConvertToRadians( 90.0f)) * 12.0f, cosf(XMConvertToRadians( 90.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//30
+			{ {  sinf(XMConvertToRadians(108.0f)) * 12.0f, cosf(XMConvertToRadians(108.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//31
+			{ {  sinf(XMConvertToRadians(126.0f)) * 12.0f, cosf(XMConvertToRadians(126.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//32
+			{ {  sinf(XMConvertToRadians(144.0f)) * 12.0f, cosf(XMConvertToRadians(144.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//33
+			{ {  sinf(XMConvertToRadians(162.0f)) * 12.0f, cosf(XMConvertToRadians(162.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//34
+			{ {  sinf(XMConvertToRadians(180.0f)) * 12.0f, cosf(XMConvertToRadians(180.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//35
+			{ {  sinf(XMConvertToRadians(198.0f)) * 12.0f, cosf(XMConvertToRadians(198.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//36
+			{ {  sinf(XMConvertToRadians(216.0f)) * 12.0f, cosf(XMConvertToRadians(216.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//37
+			{ {  sinf(XMConvertToRadians(234.0f)) * 12.0f, cosf(XMConvertToRadians(234.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//38
+			{ {  sinf(XMConvertToRadians(252.0f)) * 12.0f, cosf(XMConvertToRadians(252.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//39
+			{ {  sinf(XMConvertToRadians(270.0f)) * 12.0f, cosf(XMConvertToRadians(270.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//40
+			{ {  sinf(XMConvertToRadians(288.0f)) * 12.0f, cosf(XMConvertToRadians(288.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//41
+			{ {  sinf(XMConvertToRadians(306.0f)) * 12.0f, cosf(XMConvertToRadians(306.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//42
+			{ {  sinf(XMConvertToRadians(324.0f)) * 12.0f, cosf(XMConvertToRadians(324.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//43
+			{ {  sinf(XMConvertToRadians(342.0f)) * 12.0f, cosf(XMConvertToRadians(342.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//44
+			{ {  sinf(XMConvertToRadians(360.0f)) * 12.0f, cosf(XMConvertToRadians(360.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//44
 
+		});
 
 	indices = std::vector<uint16_t>({
 		//前
 		0,1,2,
-		1,2,3,
+		3,2,1,
 		//後
 		5,4,6,
 		7,5,6,
 		//左
 		8,9,10,
-		9,10,11,
+		11,10,9,
 		//右
 		13,12,14,
 		15,13,14,
@@ -97,28 +101,32 @@ void Draw::Ini(IniDX* iniDX) {
 		19,17,18,
 		//上
 		20,21,22,
-		21,22,23,
+		23,22,21,
 
-		24,25,26,
-		24,26,27,
-		24,27,28,
-		24,28,29,
-		24,29,30,
-		24,30,31,
-		24,31,32,
-		24,32,33,
-		24,33,34,
-		24,34,35,
-		24,35,36,
-		24,36,37,
-		24,37,38,
-		24,38,39,
-		24,39,40,
-		24,40,41,
-		24,41,42,
-		24,42,43,
-		24,43,44,
-		24,44,25,
+		
+		});
+
+	indices2 = std::vector<uint16_t>({
+		0,1,2,
+		0,2,3,
+		0,3,4,
+		0,4,5,
+		0,5,6,
+		0,6,7,
+		0,7,8,
+		0,8,9,
+		0,9,10,
+		0,10,11,
+		0,11,12,
+		0,12,13,
+		0,13,14,
+		0,14,15,
+		0,15,16,
+		0,16,17,
+		0,17,18,
+		0,18,19,
+		0,19,20,
+		0,20,21,
 		});
 
 	//ビュー変換行列
@@ -192,8 +200,36 @@ void Draw::Ini(IniDX* iniDX) {
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(iniDX->result));
 
+	// 頂点データ全体のサイズ = 頂点データ1つ分のサイズ * 頂点データの要素数
+	UINT sizeVB2 = static_cast<UINT>(sizeof(vertices2[0]) * vertices2.size());
+
+	//頂点バッファの設定
+	//D3D12_HEAP_PROPERTIES heapProp{};			//ヒープ設定
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;		//GPUへの転送用
+	//リソース設定
+	//D3D12_RESOURCE_DESC resDesc{};
+	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resDesc.Width = sizeVB2;						//頂点データ全体のサイズ
+	resDesc.Height = 1;
+	resDesc.DepthOrArraySize = 1;
+	resDesc.MipLevels = 1;
+	resDesc.SampleDesc.Count = 1;
+	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//頂点バッファの生成2
+	ID3D12Resource* vertBuff2 = nullptr;
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&heapProp, // ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc, // リソース設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&vertBuff2));
+	assert(SUCCEEDED(iniDX->result));
+
 	//インデックスデータ全体のサイズ
 	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices.size());
+	UINT sizeIB2 = static_cast<UINT>(sizeof(uint16_t) * indices2.size());
 
 	//リソース設定
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -214,6 +250,25 @@ void Draw::Ini(IniDX* iniDX) {
 		IID_PPV_ARGS(&indexBuff)
 	);
 
+	//リソース設定
+	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resDesc.Width = sizeIB2;
+	resDesc.DepthOrArraySize = 1;
+	resDesc.MipLevels = 1;
+	resDesc.SampleDesc.Count = 1;
+	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//インデックスバッファの生成2
+	ID3D12Resource* indexBuff2 = nullptr;
+	iniDX->result = iniDX->device->CreateCommittedResource(
+		&heapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&indexBuff2)
+	);
+
 	//インデックスバッファをマッピング
 	uint16_t* indexMap = nullptr;
 	iniDX->result = indexBuff->Map(0, nullptr, (void**)&indexMap);
@@ -228,6 +283,23 @@ void Draw::Ini(IniDX* iniDX) {
 	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
 	ibView.SizeInBytes = sizeIB;
+
+	//インデックスバッファをマッピング
+	uint16_t* indexMap2 = nullptr;
+	iniDX->result = indexBuff2->Map(0, nullptr, (void**)&indexMap2);
+	//全インデックスに対して
+	for (int i = 0; i < indices2.size(); i++) {
+		indexMap2[i] = indices2[i];
+	}
+	//マッピング解除
+	indexBuff2->Unmap(0, nullptr);
+
+	//インデックスバッファビューの作成
+	ibView2.BufferLocation = indexBuff2->GetGPUVirtualAddress();
+	ibView2.Format = DXGI_FORMAT_R16_UINT;
+	ibView2.SizeInBytes = sizeIB2;
+
+
 
 	//三角形1つごとに計算していく
 	for (int i = 0; i < indices.size() / 3; i++) {
@@ -263,12 +335,31 @@ void Draw::Ini(IniDX* iniDX) {
 	// 繋がりを解除
 	vertBuff->Unmap(0, nullptr);
 
+
+	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得2
+	Vertex* vertMap2 = nullptr;
+	iniDX->result = vertBuff2->Map(0, nullptr, (void**)&vertMap2);
+	assert(SUCCEEDED(iniDX->result));
+	// 全頂点に対して
+	for (int i = 0; i < vertices2.size(); i++) {
+		vertMap2[i] = vertices2[i]; // 座標をコピー
+	}
+	// 繋がりを解除
+	vertBuff2->Unmap(0, nullptr);
+
 	// GPU仮想アドレス
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
 	vbView.SizeInBytes = sizeVB;
 	// 頂点1つ分のデータサイズ
 	vbView.StrideInBytes = sizeof(vertices[0]);
+
+	// GPU仮想アドレス
+	vbView2.BufferLocation = vertBuff2->GetGPUVirtualAddress();
+	// 頂点バッファのサイズ
+	vbView2.SizeInBytes = sizeVB2;
+	// 頂点1つ分のデータサイズ
+	vbView2.StrideInBytes = sizeof(vertices2[0]);
 
 	ID3DBlob* vsBlob = nullptr; // 頂点シェーダオブジェクト
 	ID3DBlob* psBlob = nullptr; // ピクセルシェーダオブジェクト

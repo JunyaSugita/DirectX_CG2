@@ -14,4 +14,5 @@ public:
 	bool triangle;
 	bool solid;
 	bool circle;
+	bool model3d;
 };
