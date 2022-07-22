@@ -58,29 +58,44 @@ void Draw::Ini(IniDX* iniDX) {
 		});
 	vertices2 = std::vector<Vertex>({
 			//円のデータ
-			{ {  0.0f,  0.0f, 0.0f},{},{1.0f,1.0f}},		//24
-			{ {  sinf(XMConvertToRadians(  0.0f)) * 12.0f, cosf(XMConvertToRadians(  0.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//26
-			{ {  sinf(XMConvertToRadians( 18.0f)) * 12.0f, cosf(XMConvertToRadians( 18.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//26
-			{ {  sinf(XMConvertToRadians( 36.0f)) * 12.0f, cosf(XMConvertToRadians( 36.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//27
-			{ {  sinf(XMConvertToRadians( 54.0f)) * 12.0f, cosf(XMConvertToRadians( 54.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//28
-			{ {  sinf(XMConvertToRadians( 72.0f)) * 12.0f, cosf(XMConvertToRadians( 72.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//29
-			{ {  sinf(XMConvertToRadians( 90.0f)) * 12.0f, cosf(XMConvertToRadians( 90.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//30
-			{ {  sinf(XMConvertToRadians(108.0f)) * 12.0f, cosf(XMConvertToRadians(108.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//31
-			{ {  sinf(XMConvertToRadians(126.0f)) * 12.0f, cosf(XMConvertToRadians(126.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//32
-			{ {  sinf(XMConvertToRadians(144.0f)) * 12.0f, cosf(XMConvertToRadians(144.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//33
-			{ {  sinf(XMConvertToRadians(162.0f)) * 12.0f, cosf(XMConvertToRadians(162.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//34
-			{ {  sinf(XMConvertToRadians(180.0f)) * 12.0f, cosf(XMConvertToRadians(180.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//35
-			{ {  sinf(XMConvertToRadians(198.0f)) * 12.0f, cosf(XMConvertToRadians(198.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//36
-			{ {  sinf(XMConvertToRadians(216.0f)) * 12.0f, cosf(XMConvertToRadians(216.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//37
-			{ {  sinf(XMConvertToRadians(234.0f)) * 12.0f, cosf(XMConvertToRadians(234.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//38
-			{ {  sinf(XMConvertToRadians(252.0f)) * 12.0f, cosf(XMConvertToRadians(252.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//39
-			{ {  sinf(XMConvertToRadians(270.0f)) * 12.0f, cosf(XMConvertToRadians(270.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//40
-			{ {  sinf(XMConvertToRadians(288.0f)) * 12.0f, cosf(XMConvertToRadians(288.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//41
-			{ {  sinf(XMConvertToRadians(306.0f)) * 12.0f, cosf(XMConvertToRadians(306.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//42
-			{ {  sinf(XMConvertToRadians(324.0f)) * 12.0f, cosf(XMConvertToRadians(324.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//43
-			{ {  sinf(XMConvertToRadians(342.0f)) * 12.0f, cosf(XMConvertToRadians(342.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//44
-			{ {  sinf(XMConvertToRadians(360.0f)) * 12.0f, cosf(XMConvertToRadians(360.0f)) * 12.0f, 0.0f},{},{0.0f,0.0f}},	//44
-
+			{ {  0.0f,  0.0f, 0.0f},{},{1.0f,1.0f}},		//0
+			{ {  sinf(XMConvertToRadians(  0.0f)) * 5.0f, cosf(XMConvertToRadians(  0.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//26
+			{ {  sinf(XMConvertToRadians( 10.0f)) * 5.0f, cosf(XMConvertToRadians( 10.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//26
+			{ {  sinf(XMConvertToRadians( 20.0f)) * 5.0f, cosf(XMConvertToRadians( 20.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//27
+			{ {  sinf(XMConvertToRadians( 30.0f)) * 5.0f, cosf(XMConvertToRadians( 30.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//28
+			{ {  sinf(XMConvertToRadians( 40.0f)) * 5.0f, cosf(XMConvertToRadians( 40.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//29
+			{ {  sinf(XMConvertToRadians( 50.0f)) * 5.0f, cosf(XMConvertToRadians( 50.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//30
+			{ {  sinf(XMConvertToRadians( 60.0f)) * 5.0f, cosf(XMConvertToRadians( 60.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//31
+			{ {  sinf(XMConvertToRadians( 70.0f)) * 5.0f, cosf(XMConvertToRadians( 70.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//32
+			{ {  sinf(XMConvertToRadians( 80.0f)) * 5.0f, cosf(XMConvertToRadians( 80.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//33
+			{ {  sinf(XMConvertToRadians( 90.0f)) * 5.0f, cosf(XMConvertToRadians( 90.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//34
+			{ {  sinf(XMConvertToRadians(100.0f)) * 5.0f, cosf(XMConvertToRadians(100.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//35
+			{ {  sinf(XMConvertToRadians(110.0f)) * 5.0f, cosf(XMConvertToRadians(110.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//36
+			{ {  sinf(XMConvertToRadians(120.0f)) * 5.0f, cosf(XMConvertToRadians(120.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//37
+			{ {  sinf(XMConvertToRadians(130.0f)) * 5.0f, cosf(XMConvertToRadians(130.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//38
+			{ {  sinf(XMConvertToRadians(140.0f)) * 5.0f, cosf(XMConvertToRadians(140.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//39
+			{ {  sinf(XMConvertToRadians(150.0f)) * 5.0f, cosf(XMConvertToRadians(150.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//40
+			{ {  sinf(XMConvertToRadians(160.0f)) * 5.0f, cosf(XMConvertToRadians(160.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//41
+			{ {  sinf(XMConvertToRadians(170.0f)) * 5.0f, cosf(XMConvertToRadians(170.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//42
+			{ {  sinf(XMConvertToRadians(180.0f)) * 5.0f, cosf(XMConvertToRadians(180.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//43
+			{ {  sinf(XMConvertToRadians(190.0f)) * 5.0f, cosf(XMConvertToRadians(190.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(200.0f)) * 5.0f, cosf(XMConvertToRadians(200.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(210.0f)) * 5.0f, cosf(XMConvertToRadians(210.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(220.0f)) * 5.0f, cosf(XMConvertToRadians(220.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(230.0f)) * 5.0f, cosf(XMConvertToRadians(230.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(240.0f)) * 5.0f, cosf(XMConvertToRadians(240.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(250.0f)) * 5.0f, cosf(XMConvertToRadians(250.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(260.0f)) * 5.0f, cosf(XMConvertToRadians(260.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(270.0f)) * 5.0f, cosf(XMConvertToRadians(270.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(280.0f)) * 5.0f, cosf(XMConvertToRadians(280.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(290.0f)) * 5.0f, cosf(XMConvertToRadians(290.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(300.0f)) * 5.0f, cosf(XMConvertToRadians(300.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(310.0f)) * 5.0f, cosf(XMConvertToRadians(310.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(320.0f)) * 5.0f, cosf(XMConvertToRadians(320.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(330.0f)) * 5.0f, cosf(XMConvertToRadians(330.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(340.0f)) * 5.0f, cosf(XMConvertToRadians(340.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(350.0f)) * 5.0f, cosf(XMConvertToRadians(350.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+			{ {  sinf(XMConvertToRadians(360.0f)) * 5.0f, cosf(XMConvertToRadians(360.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
 		});
 
 	indices = std::vector<uint16_t>({
@@ -127,6 +142,22 @@ void Draw::Ini(IniDX* iniDX) {
 		0,18,19,
 		0,19,20,
 		0,20,21,
+		0,21,22,
+		0,22,23,
+		0,23,24,
+		0,24,25,
+		0,25,26,
+		0,26,27,
+		0,27,28,
+		0,28,29,
+		0,29,30,
+		0,30,31,
+		0,31,32,
+		0,32,33,
+		0,33,34,
+		0,34,35,
+		0,35,36,
+		0,36,1,
 		});
 
 	//ビュー変換行列
@@ -742,19 +773,19 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 
 		object3ds[1].worldTransform.scale = { 1.0f,2.0f,1.0f };
 		object3ds[1].worldTransform.rotation = { 0.0f,0.0f,0.0f };
-		object3ds[1].worldTransform.trans = { 50.0f,50.0f,10.0f };
+		object3ds[1].worldTransform.trans = { 20.0f,20.0f,10.0f };
 
 		object3ds[2].worldTransform.scale = { 2.0f,1.0f,1.0f };
 		object3ds[2].worldTransform.rotation = { 0.0f,0.0f,0.0f };
-		object3ds[2].worldTransform.trans = { -50.0f,50.0f,20.0f };
+		object3ds[2].worldTransform.trans = { -20.0f,20.0f,20.0f };
 
 		object3ds[3].worldTransform.scale = { 1.0f,3.0f,1.0f };
 		object3ds[3].worldTransform.rotation = { 0.0f,0.0f,0.0f };
-		object3ds[3].worldTransform.trans = { -50.0f,-50.0f,-20.0f };
+		object3ds[3].worldTransform.trans = { -20.0f,-20.0f,-20.0f };
 
 		object3ds[4].worldTransform.scale = { 4.0f,4.0f,1.0f };
 		object3ds[4].worldTransform.rotation = { 0.0f,0.0f,0.0f };
-		object3ds[4].worldTransform.trans = { 50.0f,-50.0f,-10.0f };
+		object3ds[4].worldTransform.trans = { 20.0f,-20.0f,-10.0f };
 
 		//object3ds[5].worldTransform.scale = { 2.0f,3.0f,1.0f };
 		//object3ds[5].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };

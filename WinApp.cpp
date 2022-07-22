@@ -120,10 +120,10 @@ void WinApp::MessageLoop(IniDX* iniDX, Draw* draw, Input* input, Graphics* graph
 
 		if (input->key[DIK_D] || input->key[DIK_A]) {
 			if (input->key[DIK_D]) {
-				angle += XMConvertToRadians(1.0f);
+				angle -= XMConvertToRadians(1.0f);
 			}
 			else if (input->key[DIK_A]) {
-				angle -= XMConvertToRadians(1.0f);
+				angle += XMConvertToRadians(1.0f);
 			}
 
 			draw->eye.x = -100 * sinf(angle);
@@ -138,6 +138,20 @@ void WinApp::MessageLoop(IniDX* iniDX, Draw* draw, Input* input, Graphics* graph
 			if (input->key[DIK_DOWN]) { draw->object3ds[0].worldTransform.trans.y -= 1.0f; }
 			if (input->key[DIK_RIGHT]) { draw->object3ds[0].worldTransform.trans.x += 1.0f; }
 			if (input->key[DIK_LEFT]) { draw->object3ds[0].worldTransform.trans.x -= 1.0f; }
+		}
+
+		if (input->key[DIK_Q] || input->key[DIK_E]) {
+			if (input->key[DIK_Q]) { draw->object3ds[0].worldTransform.rotation.y += 0.02f; }
+			if (input->key[DIK_E]) { draw->object3ds[0].worldTransform.rotation.y -= 0.02f; }
+		}
+
+		if (input->key[DIK_W] || input->key[DIK_S]) {
+
+			if (input->key[DIK_W]) { draw->object3ds[0].worldTransform.scale += {0.02f, 0.02f, 0.02f}; }
+			if (input->key[DIK_S]) { draw->object3ds[0].worldTransform.scale -= {0.02f, 0.02f, 0.02f}; }
+			if (draw->object3ds[0].worldTransform.scale.x < 0) {
+				draw->object3ds[0].worldTransform.scale += {0.02f, 0.02f, 0.02f};
+			}
 		}
 
 		if (input->key[DIK_1] && input->oldKey[DIK_1] == 0) {
