@@ -3,15 +3,7 @@
 #include "WinSize.h"
 
 
-Draw::Draw() {
-	//scale = { 1.0f,1.0f,1.0f };
-	//rotation = { 0.0f,0.0f,0.0f };
-	//position = { 0.0f,0.0f,0.0f };
-
-	//scale1 = { 1.0f,1.0f,1.0f };
-	//rotation1 = { 0.0f,XM_PI/4.0f,0.0f };
-	//position1 = { -20.0f,0.0f,0.0f };
-}
+Draw::Draw() {}
 
 Draw::~Draw() {}
 
@@ -54,48 +46,48 @@ void Draw::Ini(IniDX* iniDX) {
 		{ {  5.0f, 5.0f,-5.0f},{},{1.0f,1.0f} },		//右下22
 		{ {  5.0f, 5.0f, 5.0f},{},{1.0f,0.0f} },		//右上23
 
-		
+
 		});
 	vertices2 = std::vector<Vertex>({
-			//円のデータ
-			{ {  0.0f,  0.0f, 0.0f},{},{1.0f,1.0f}},		//0
-			{ {  sinf(XMConvertToRadians(  0.0f)) * 5.0f, cosf(XMConvertToRadians(  0.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//26
-			{ {  sinf(XMConvertToRadians( 10.0f)) * 5.0f, cosf(XMConvertToRadians( 10.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//26
-			{ {  sinf(XMConvertToRadians( 20.0f)) * 5.0f, cosf(XMConvertToRadians( 20.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//27
-			{ {  sinf(XMConvertToRadians( 30.0f)) * 5.0f, cosf(XMConvertToRadians( 30.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//28
-			{ {  sinf(XMConvertToRadians( 40.0f)) * 5.0f, cosf(XMConvertToRadians( 40.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//29
-			{ {  sinf(XMConvertToRadians( 50.0f)) * 5.0f, cosf(XMConvertToRadians( 50.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//30
-			{ {  sinf(XMConvertToRadians( 60.0f)) * 5.0f, cosf(XMConvertToRadians( 60.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//31
-			{ {  sinf(XMConvertToRadians( 70.0f)) * 5.0f, cosf(XMConvertToRadians( 70.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//32
-			{ {  sinf(XMConvertToRadians( 80.0f)) * 5.0f, cosf(XMConvertToRadians( 80.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//33
-			{ {  sinf(XMConvertToRadians( 90.0f)) * 5.0f, cosf(XMConvertToRadians( 90.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//34
-			{ {  sinf(XMConvertToRadians(100.0f)) * 5.0f, cosf(XMConvertToRadians(100.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//35
-			{ {  sinf(XMConvertToRadians(110.0f)) * 5.0f, cosf(XMConvertToRadians(110.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//36
-			{ {  sinf(XMConvertToRadians(120.0f)) * 5.0f, cosf(XMConvertToRadians(120.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//37
-			{ {  sinf(XMConvertToRadians(130.0f)) * 5.0f, cosf(XMConvertToRadians(130.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//38
-			{ {  sinf(XMConvertToRadians(140.0f)) * 5.0f, cosf(XMConvertToRadians(140.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//39
-			{ {  sinf(XMConvertToRadians(150.0f)) * 5.0f, cosf(XMConvertToRadians(150.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//40
-			{ {  sinf(XMConvertToRadians(160.0f)) * 5.0f, cosf(XMConvertToRadians(160.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//41
-			{ {  sinf(XMConvertToRadians(170.0f)) * 5.0f, cosf(XMConvertToRadians(170.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//42
-			{ {  sinf(XMConvertToRadians(180.0f)) * 5.0f, cosf(XMConvertToRadians(180.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//43
-			{ {  sinf(XMConvertToRadians(190.0f)) * 5.0f, cosf(XMConvertToRadians(190.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(200.0f)) * 5.0f, cosf(XMConvertToRadians(200.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(210.0f)) * 5.0f, cosf(XMConvertToRadians(210.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(220.0f)) * 5.0f, cosf(XMConvertToRadians(220.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(230.0f)) * 5.0f, cosf(XMConvertToRadians(230.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(240.0f)) * 5.0f, cosf(XMConvertToRadians(240.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(250.0f)) * 5.0f, cosf(XMConvertToRadians(250.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(260.0f)) * 5.0f, cosf(XMConvertToRadians(260.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(270.0f)) * 5.0f, cosf(XMConvertToRadians(270.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(280.0f)) * 5.0f, cosf(XMConvertToRadians(280.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(290.0f)) * 5.0f, cosf(XMConvertToRadians(290.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(300.0f)) * 5.0f, cosf(XMConvertToRadians(300.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(310.0f)) * 5.0f, cosf(XMConvertToRadians(310.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(320.0f)) * 5.0f, cosf(XMConvertToRadians(320.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(330.0f)) * 5.0f, cosf(XMConvertToRadians(330.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(340.0f)) * 5.0f, cosf(XMConvertToRadians(340.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(350.0f)) * 5.0f, cosf(XMConvertToRadians(350.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
-			{ {  sinf(XMConvertToRadians(360.0f)) * 5.0f, cosf(XMConvertToRadians(360.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		//円のデータ
+		{ {  0.0f,  0.0f, 0.0f},{},{1.0f,1.0f}},		//0
+		{ {  sinf(XMConvertToRadians(0.0f)) * 5.0f, cosf(XMConvertToRadians(0.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//26
+		{ {  sinf(XMConvertToRadians(10.0f)) * 5.0f, cosf(XMConvertToRadians(10.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//26
+		{ {  sinf(XMConvertToRadians(20.0f)) * 5.0f, cosf(XMConvertToRadians(20.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//27
+		{ {  sinf(XMConvertToRadians(30.0f)) * 5.0f, cosf(XMConvertToRadians(30.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//28
+		{ {  sinf(XMConvertToRadians(40.0f)) * 5.0f, cosf(XMConvertToRadians(40.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//29
+		{ {  sinf(XMConvertToRadians(50.0f)) * 5.0f, cosf(XMConvertToRadians(50.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//30
+		{ {  sinf(XMConvertToRadians(60.0f)) * 5.0f, cosf(XMConvertToRadians(60.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//31
+		{ {  sinf(XMConvertToRadians(70.0f)) * 5.0f, cosf(XMConvertToRadians(70.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//32
+		{ {  sinf(XMConvertToRadians(80.0f)) * 5.0f, cosf(XMConvertToRadians(80.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//33
+		{ {  sinf(XMConvertToRadians(90.0f)) * 5.0f, cosf(XMConvertToRadians(90.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//34
+		{ {  sinf(XMConvertToRadians(100.0f)) * 5.0f, cosf(XMConvertToRadians(100.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//35
+		{ {  sinf(XMConvertToRadians(110.0f)) * 5.0f, cosf(XMConvertToRadians(110.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//36
+		{ {  sinf(XMConvertToRadians(120.0f)) * 5.0f, cosf(XMConvertToRadians(120.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//37
+		{ {  sinf(XMConvertToRadians(130.0f)) * 5.0f, cosf(XMConvertToRadians(130.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//38
+		{ {  sinf(XMConvertToRadians(140.0f)) * 5.0f, cosf(XMConvertToRadians(140.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//39
+		{ {  sinf(XMConvertToRadians(150.0f)) * 5.0f, cosf(XMConvertToRadians(150.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//40
+		{ {  sinf(XMConvertToRadians(160.0f)) * 5.0f, cosf(XMConvertToRadians(160.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//41
+		{ {  sinf(XMConvertToRadians(170.0f)) * 5.0f, cosf(XMConvertToRadians(170.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//42
+		{ {  sinf(XMConvertToRadians(180.0f)) * 5.0f, cosf(XMConvertToRadians(180.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//43
+		{ {  sinf(XMConvertToRadians(190.0f)) * 5.0f, cosf(XMConvertToRadians(190.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(200.0f)) * 5.0f, cosf(XMConvertToRadians(200.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(210.0f)) * 5.0f, cosf(XMConvertToRadians(210.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(220.0f)) * 5.0f, cosf(XMConvertToRadians(220.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(230.0f)) * 5.0f, cosf(XMConvertToRadians(230.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(240.0f)) * 5.0f, cosf(XMConvertToRadians(240.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(250.0f)) * 5.0f, cosf(XMConvertToRadians(250.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(260.0f)) * 5.0f, cosf(XMConvertToRadians(260.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(270.0f)) * 5.0f, cosf(XMConvertToRadians(270.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(280.0f)) * 5.0f, cosf(XMConvertToRadians(280.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(290.0f)) * 5.0f, cosf(XMConvertToRadians(290.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(300.0f)) * 5.0f, cosf(XMConvertToRadians(300.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(310.0f)) * 5.0f, cosf(XMConvertToRadians(310.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(320.0f)) * 5.0f, cosf(XMConvertToRadians(320.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(330.0f)) * 5.0f, cosf(XMConvertToRadians(330.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(340.0f)) * 5.0f, cosf(XMConvertToRadians(340.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(350.0f)) * 5.0f, cosf(XMConvertToRadians(350.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
+		{ {  sinf(XMConvertToRadians(360.0f)) * 5.0f, cosf(XMConvertToRadians(360.0f)) * 5.0f, 0.0f},{},{1.0f,1.0f}},	//44
 		});
 
 	indices = std::vector<uint16_t>({
@@ -118,7 +110,7 @@ void Draw::Ini(IniDX* iniDX) {
 		20,21,22,
 		23,22,21,
 
-		
+
 		});
 
 	indices2 = std::vector<uint16_t>({
@@ -166,38 +158,6 @@ void Draw::Ini(IniDX* iniDX) {
 	up = { 0, 1, 0 };
 
 	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-	/*matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(rotation.z);
-	matRot *= XMMatrixRotationX(rotation.x);
-	matRot *= XMMatrixRotationY(rotation.y);
-	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-
-	matScale1 = XMMatrixScaling(scale1.x, scale1.y, scale1.z);
-	matRot1 = XMMatrixIdentity();
-	matRot1 *= XMMatrixRotationZ(rotation1.z);
-	matRot1 *= XMMatrixRotationX(rotation1.x);
-	matRot1 *= XMMatrixRotationY(rotation1.y);
-	matTrans1 = XMMatrixTranslation(position1.x,position1.y,position1.z);
-
-	matWorld.r[0] = { 1,0,0,0 };
-	matWorld.r[1] = { 0,1,0,0 };
-	matWorld.r[2] = { 0,0,1,0 };
-	matWorld.r[3] = { 0,0,0,1 };
-
-	matWorld1.r[0] = { 1,0,0,0 };
-	matWorld1.r[1] = { 0,1,0,0 };
-	matWorld1.r[2] = { 0,0,1,0 };
-	matWorld1.r[3] = { 0,0,0,1 };
-
-	matWorld *= matScale;
-	matWorld *= matRot;
-	matWorld *= matTrans;
-
-	matWorld1 *= matScale1;
-	matWorld1 *= matRot1;
-	matWorld1 *= matTrans1;*/
 
 	for (size_t i = 0; i < _countof(object3ds); i++) {
 		object3ds[i].UpdateObject3d();
@@ -660,26 +620,11 @@ void Draw::Ini(IniDX* iniDX) {
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	ConstBaffer(iniDX);
-	//constMapTransform->mat = XMMatrixIdentity();
-	//constMapTransform->mat.r[0].m128_f32[0] = 2.0f / WIN_WIDTH;
-	//constMapTransform->mat.r[1].m128_f32[1] = -2.0f / WIN_HEIGHT;
-	//constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
-	//constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
-	//constMapTransform0->mat = XMMatrixOrthographicOffCenterLH(
-	//	0.0f, WIN_WIDTH,
-	//	WIN_HEIGHT, 0.0f,
-	//	0.0f, 1.0f
-	//);
 	matProjection = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),
 		(float)WIN_WIDTH / WIN_HEIGHT,
 		0.1f, 1000.0f
 	);
-
-	//定数バッファに転送
-	//constMapTransform0->mat = matWorld * matView * matProjection;
-	//constMapTransform1->mat = matWorld1 * matView * matProjection;
-
 
 	//ルートパラメータ0番の設定
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー
@@ -787,99 +732,43 @@ void Draw::ConstBaffer(IniDX* iniDX) {
 		object3ds[4].worldTransform.rotation = { 0.0f,0.0f,0.0f };
 		object3ds[4].worldTransform.trans = { 20.0f,-20.0f,-10.0f };
 
-		//object3ds[5].worldTransform.scale = { 2.0f,3.0f,1.0f };
-		//object3ds[5].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		//object3ds[5].worldTransform.trans = { 0.0f,50.0f,-30.0f };
+		//リソース設定
+		depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+		depthResourceDesc.Width = WIN_WIDTH;
+		depthResourceDesc.Height = WIN_HEIGHT;
+		depthResourceDesc.DepthOrArraySize = 1;
+		depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
+		depthResourceDesc.SampleDesc.Count = 1;
+		depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-		//object3ds[6].worldTransform.scale = { 3.0f,2.0f,1.0f };
-		//object3ds[6].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		//object3ds[6].worldTransform.trans = { 0.0f,-50.0f,10.0f };
+		//深度値用ヒーププロパティ
+		depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+		//深度値のクリア設定
+		depthClearValue.DepthStencil.Depth = 1.0f;		//深度値1.0f(最大値)でクリア
+		depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 
-		//object3ds[7].worldTransform.scale = { 2.0f,2.0f,1.0f };
-		//object3ds[7].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		//object3ds[7].worldTransform.trans = { -50.0f,0.0f,20.0f };
+		//リソース生成
+		iniDX->result = iniDX->device->CreateCommittedResource(
+			&depthHeapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&depthResourceDesc,
+			D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値書き込みに使用
+			&depthClearValue,
+			IID_PPV_ARGS(&depthBuff)
+		);
 
-		//object3ds[8].worldTransform.scale = { 4.0f,4.0f,1.0f };
-		//object3ds[8].worldTransform.rotation = { XMConvertToRadians(180.0f),0.0f,0.0f };
-		//object3ds[8].worldTransform.trans = { 50.0f,0.0f,-10.0f };
+		//深度ビュー用デスクリプタヒープ作成
+		dsvHeapDesc.NumDescriptors = 1;//深度ビューは1つ
+		dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;//デプスステンシルビュー
+		iniDX->result = iniDX->device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
-		//ここから↓は親子構造のサンプル
-		//先頭以外なら
-		//if (i > 0) {
-			//1つ前のオブジェクトを親オブジェクトとする
-			//object3ds[i].worldTransform.parent = &object3ds[i - 1].worldTransform;
-			//親オブジェクトの9割の大きさ
-			//object3ds[i].worldTransform.scale = { 0.9f,0.9f,0.9f };
-			//親オブジェクトに対してZ軸まわりに30度回転
-			//object3ds[i].worldTransform.rotation = { 0.0f,0.0f,/*XMConvertToRadians(30.0f) */ 0.0f};
-
-			//親オブジェクトに対してZ方向-8.0ずらす
-			//object3ds[i].worldTransform.trans = { 0.0f,0.0f,-8.0f };
-		//}
+		//深度ビュー作成
+		dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+		dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+		iniDX->device->CreateDepthStencilView(
+			depthBuff,
+			&dsvDesc,
+			dsvHeap->GetCPUDescriptorHandleForHeapStart()
+		);
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//iniDX->result = iniDX->device->CreateCommittedResource(
-	//	&cbHeapProp,
-	//	D3D12_HEAP_FLAG_NONE,
-	//	&cbResourceDesc,
-	//	D3D12_RESOURCE_STATE_GENERIC_READ,
-	//	nullptr,
-	//	IID_PPV_ARGS(&constBuffTransform0)
-	//);
-
-	//定数バッファのマッピング
-	//iniDX->result = constBuffTransform0->Map(0, nullptr, (void**)&constMapTransform0);
-	//assert(SUCCEEDED(iniDX->result));
-
-	//iniDX->result = iniDX->device->CreateCommittedResource(
-	//	&cbHeapProp,
-	//	D3D12_HEAP_FLAG_NONE,
-	//	&cbResourceDesc,
-	//	D3D12_RESOURCE_STATE_GENERIC_READ,
-	//	nullptr,
-	//	IID_PPV_ARGS(&constBuffTransform1)
-	//);
-	//定数バッファのマッピング
-	//iniDX->result = constBuffTransform1->Map(0, nullptr, (void**)&constMapTransform1);
-	//assert(SUCCEEDED(iniDX->result));
-
-
-	//リソース設定
-	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = WIN_WIDTH;
-	depthResourceDesc.Height = WIN_HEIGHT;
-	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
-	depthResourceDesc.SampleDesc.Count = 1;
-	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
-
-	//深度値用ヒーププロパティ
-	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	//深度値のクリア設定
-	depthClearValue.DepthStencil.Depth = 1.0f;		//深度値1.0f(最大値)でクリア
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
-
-	//リソース生成
-	iniDX->result = iniDX->device->CreateCommittedResource(
-		&depthHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&depthResourceDesc,
-		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値書き込みに使用
-		&depthClearValue,
-		IID_PPV_ARGS(&depthBuff)
-	);
-
-	//深度ビュー用デスクリプタヒープ作成
-	dsvHeapDesc.NumDescriptors = 1;//深度ビューは1つ
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;//デプスステンシルビュー
-	iniDX->result = iniDX->device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
-
-	//深度ビュー作成
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	iniDX->device->CreateDepthStencilView(
-		depthBuff,
-		&dsvDesc,
-		dsvHeap->GetCPUDescriptorHandleForHeapStart()
-	);
 }
